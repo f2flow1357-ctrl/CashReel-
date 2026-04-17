@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CashReel - اربح من مشاهدة الفيديوهات</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap');
+    body { font-family: 'Cairo', sans-serif; }
+   .gold { color: #FFD700; }
+   .bg-gold { background-color: #FFD700; }
+   .btn-gold { background: linear-gradient(45deg, #FFD700, #FFA500); }
+   .btn-gold:hover { background: linear-gradient(45deg, #FFA500, #FF8C00); }
+  </style>
+</head>
+<body class="bg-gray-900 text-white">
+
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyC8tq5Ry9yVhcKbumQlbU4NE4JLHd-RRgE",
+      authDomain: "cashreel-f8198.firebaseapp.com",
+      projectId: "cashreel-f8198",
+      storageBucket: "cashreel-f8198.firebasestorage.app",
+      messagingSenderId: "969237019203",
+      appId: "1:969237019203:web:6e1c4124969d4f6f7c32f6",
+      measurementId: "G-B56V81GGVK"
+    };
+    
+    const ADMIN_EMAIL = "zakariaelachkar79@gmail.com";
+    
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+  </script>
+
+  <header class="bg-gray-800 p-4 flex justify-between items-center">
+    <h1 class="text-2xl font-black gold">CashReel 💰</h1>
+    <div id="auth-buttons">
+      <button onclick="showLogin()" class="bg-blue-600 px-4 py-2 rounded-lg mx-1">دخول</button>
+      <button onclick="showRegister()" class="btn-gold px-4 py-2 rounded-lg mx-1 text-black font-bold">تسجيل</button>
+    </div>
+    <div id="user-info" class="hidden">
+      <span id="user-email" class="mx-2"></span>
+      <span id="user-balance" class="gold font-bold mx-2">0.00$</span>
+      <button id="admin-btn" onclick="showAdminPanel()" class="bg-purple-600 px-3 py-1 rounded-lg mx-1 hidden">لوحة الأدمن</button>
+      <button onclick="logout()" class="bg-red-600 px-4 py-2 rounded-lg">خروج</button>
+    </div>
+  </header>
+
+  <main class="container mx-auto p-4">
+    <div id="main-content">
+      <div class="text-center my-12">
+        <h2 class="text-4xl font-black mb-4">اربح <span class="gold">$5</span> يومياً من مشاهدة الفيديوهات</h2>
+        <p class="text-xl mb-6">شاهد 20 فيديو يومياً، كل فيديو يعطيك 0.25$</p>
+        <button onclick="showRegister()" class="btn-gold text-black font-black text-xl px-8 py-4 rounded-xl">ابدأ الربح الآن</button>
+      </div>
+    </div>
+
+    <div id="videos-section" class="hidden">
+      <h3 class="text-3xl font-bold mb-4 text-center">فيديوهات اليوم: <span id="watched-count">0</span>/20</h3>
+      <div id="videos-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4"></div>
+      <div class="text-center mt-8">
+        <button onclick="showWithdraw()" class="bg-green-600 px-6 py-3 rounded-lg font-bold">طلب سحب الأرباح</button>
+      </div>
+    </div>
+
+    <div id="admin-panel" class="hidden bg-gray-800 p-6 rounded-xl mt-8">
+      <h3 class="text-3xl font-bold mb-4 gold">لوحة تحكم الأدمن</h3>
+      <input id="video-url" type="text" placeholder="رابط فيديو YouTube" class="w-full p-2 rounded bg-gray-700 mb-2 text-white">
+      <button onclick="addVideo()" class="btn-gold text-black font-bold px-6 py-2 rounded-lg mb-4">إضافة فيديو</button>
+      <h4 class="text-xl font-bold mb-2">طلبات السحب:</h4>
+      <div id="withdraw-requests"></div>
+    </div>
+
+    <div id="withdraw-modal" class="hidden bg-gray-800 p-6 rounded-xl mt-8">
+      <h3 class="text-2xl font-bold mb-4 gold">طلب سحب الأرباح</h3>
+      <p class="mb-2">رصيدك الحالي: <span id="current-balance" class="gold font-bold">0.00$</span></p>
+      <p class="mb-4 text-sm text-gray-400">الحد الأدنى للسحب: 10$</p>
+      
+      <label class="block mb-2">اختر طريقة السحب:</label>
+      <select id="withdraw-method" onchange="changeWithdrawMethod()" class="w-full p-2 rounded bg-gray-700 mb-3 text-white">
+        <option value="paypal">PayPal</option>
+        <option value="bybit">Bybit USDT TRC20</option>
+      </select>
+      
+      <div id="paypal-field">
+        <input id="paypal-email" type="email" placeholder="إيميل PayPal ديالك" class="w-full p-2 rounded bg-gray-700 mb-3 text-white">
+      </div>
+      
+      <div id="bybit-field" class="hidden">
+        <input id="bybit-address" type="text" placeholder="عنوان محفظة USDT TRC20 ديال Bybit" class="w-full p-2 rounded bg-gray-700 mb-1 text-white">
+        <p class="text-xs text-yellow-400 mb-3">⚠️ تأكد أن العنوان على شبكة TRC20 ويبدأ بـ T وإلا ستضيع الفلوس</p>
+      </div>
+      
+      <input id="withdraw-amount" type="number" placeholder="المبلغ" class="w-full p-2 rounded bg-gray-700 mb-4 text-white">
+      <button onclick="submitWithdraw()" class="w-full btn-gold text-black font-bold py-2 rounded-lg mb-2">إرسال الطلب</button>
+      <button onclick="closeWithdraw()" class="w-full bg-gray-600 py-2 rounded-lg">إلغاء</button>
+    </div>
+  </main>
+
+  <div id="auth-modal" class="hidden fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center">
+    <div class="bg-gray-800 p-8 rounded-xl w-96">
+      <h3 id="auth-title" class="text-2xl font-bold mb-4 text-center"></h3>
+      <input id="auth-email" type="email" placeholder="الإيميل" class="w-full p-2 rounded bg-gray-700 mb-3 text-white">
+      <input id="auth-password" type="password" placeholder="كلمة السر" class="w-full p-2 rounded bg-gray-700 mb-4 text-white">
+      <button id="auth-submit" class="w-full btn-gold text-black font-bold py-2 rounded-lg mb-2"></button>
+      <button onclick="closeAuth()" class="w-full bg-gray-600 py-2 rounded-lg">إلغاء</button>
+    </div>
+  </div>
+
+<script>
+  let currentUser = null;
+  let videos = [];
+  let userData = null;
+
+  auth.onAuthStateChanged(async (user) => {
+    if (user) {
+      currentUser = user;
+      document.getElementById('auth-buttons').classList.add('hidden');
+      document.getElementById('user-info').classList.remove('hidden');
+      document.getElementById('user-email').innerText = user.email;
+      if(user.email === ADMIN_EMAIL) document.getElementById('admin-btn').classList.remove('hidden');
+      
+      const userDoc = await db.collection('users').doc(user.uid).get();
+      if (!userDoc.exists) {
+        await db.collection('users').doc(user.uid).set({
+          email: user.email,
+          balance: 0,
+          watchedToday: 0,
+          lastWatchDate: '',
+          watchedVideos: []
+        });
+      }
+      loadUserData();
+      loadVideos();
+      document.getElementById('main-content').classList.add('hidden');
+      document.getElementById('videos-section').classList.remove('hidden');
+    } else {
+      currentUser = null;
+      document.getElementById('auth-buttons').classList.remove('hidden');
+      document.getElementById('user-info').classList.add('hidden');
+      document.getElementById('main-content').classList.remove('hidden');
+      document.getElementById('videos-section').classList.add('hidden');
+      document.getElementById('admin-panel').classList.add('hidden');
+    }
+  });
+
+  async function loadUserData() {
+    const doc = await db.collection('users').doc(currentUser.uid).get();
+    userData = doc.data();
+    const today = new Date().toDateString();
+    if(userData.lastWatchDate!== today) {
+      await db.collection('users').doc(currentUser.uid).update({ watchedToday: 0, watchedVideos: [], lastWatchDate: today });
+      userData.watchedToday = 0;
+      userData.watchedVideos = [];
+    }
+    document.getElementById('user-balance').innerText = userData.balance.toFixed(2) + '$';
+    document.getElementById('current-balance').innerText = userData.balance.toFixed(2) + '$';
+    document.getElementById('watched-count').innerText = userData.watchedToday;
+  }
+
+  async function loadVideos() {
+    const snapshot = await db.collection('videos').get();
+    videos = snapshot.docs.map(doc => ({id: doc.id,...doc.data()}));
+    renderVideos();
+  }
+
+  function renderVideos() {
+    const container = document.getElementById('videos-container');
+    container.innerHTML = '';
+    videos.forEach(video => {
+      const watched = userData.watchedVideos.includes(video.id);
+      container.innerHTML += `
+        <div class="bg-gray-800 p-3 rounded-lg">
+          <iframe class="w-full rounded" height="200" src="https://www.youtube.com/embed/${getYoutubeId(video.url)}" frameborder="0"></iframe>
+          <button onclick="watchVideo('${video.id}')" ${watched || userData.watchedToday >= 20? 'disabled' : ''} 
+            class="w-full mt-2 py-2 rounded-lg font-bold ${watched? 'bg-gray-600' : 'btn-gold text-black'}">
+            ${watched? 'تمت المشاهدة ✓' : '+ 0.25$'}
+          </button>
+        </div>`;
+    });
+  }
+
+  async function watchVideo(videoId) {
+    if(userData.watchedToday >= 20 || userData.watchedVideos.includes(videoId)) return;
+    userData.balance += 0.25;
+    userData.watchedToday += 1;
+    userData.watchedVideos.push(videoId);
+    await db.collection('users').doc(currentUser.uid).update({
+      balance: userData.balance,
+      watchedToday: userData.watchedToday,
+      watchedVideos: userData.watchedVideos
+    });
+    loadUserData();
+    renderVideos();
+  }
+
+  function getYoutubeId(url) {
+    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+    const match = url.match(regExp);
+    return (match && match[2].length === 11)? match[2] : null;
+  }
+
+  function showRegister() {
+    document.getElementById('auth-title').innerText = 'إنشاء حساب جديد';
+    document.getElementById('auth-submit').innerText = 'تسجيل';
+    document.getElementById('auth-submit').onclick = register;
+    document.getElementById('auth-modal').classList.remove('hidden');
+  }
+
+  function showLogin() {
+    document.getElementById('auth-title').innerText = 'تسجيل الدخول';
+    document.getElementById('auth-submit').innerText = 'دخول';
+    document.getElementById('auth-submit').onclick = login;
+    document.getElementById('auth-modal').classList.remove('hidden');
+  }
+
+  function closeAuth() { document.getElementById('auth-modal').classList.add('hidden'); }
+
+  async function register() {
+    const email = document.getElementById('auth-email').value;
+    const password = document.getElementById('auth-password').value;
+    try { await auth.createUserWithEmailAndPassword(email, password); closeAuth(); } 
+    catch(e) { alert('خطأ: ' + e.message); }
+  }
+
+  async function login() {
+    const email = document.getElementById('auth-email').value;
+    const password = document.getElementById('auth-password').value;
+    try { await auth.signInWithEmailAndPassword(email, password); closeAuth(); } 
+    catch(e) { alert('خطأ: ' + e.message); }
+  }
+
+  function logout() { auth.signOut(); }
+
+  function showAdminPanel() {
+    document.getElementById('admin-panel').classList.toggle('hidden');
+    loadWithdrawRequests();
+  }
+
+  async function addVideo() {
+    const url = document.getElementById('video-url').value;
+    if(!url) return;
+    await db.collection('videos').add({url: url, createdAt: new Date()});
+    document.getElementById('video-url').value = '';
+    alert('تمت إضافة الفيديو');
+    loadVideos();
+  }
+
+  async function loadWithdrawRequests() {
+    const snapshot = await db.collection('withdrawals').where('status', '==', 'pending').get();
+    const container = document.getElementById('withdraw-requests');
+    container.innerHTML = '';
+    snapshot.forEach(doc => {
+      const data = doc.data();
+      let methodText = data.method === 'paypal' ? `PayPal: ${data.paypal}` : `Bybit USDT: ${data.bybit}`;
+      container.innerHTML += `
+        <div class="bg-gray-700 p-3 rounded mb-2 flex justify-between items-center">
+          <div>
+            <p>${data.email} - <span class="gold">${data.amount}$</span></p>
+            <p class="text-sm text-gray-400">${methodText}</p>
+          </div>
+          <button onclick="approveWithdraw('${doc.id}')" class="bg-green-600 px-3 py-1 rounded">تم الدفع</button>
+        </div>`;
+    });
+  }
+
+  async function approveWithdraw(id) {
+    await db.collection('withdrawals').doc(id).update({status: 'paid'});
+    loadWithdrawRequests();
+    alert('تم تحديث حالة الطلب');
+  }
+
+  function showWithdraw() {
+    document.getElementById('withdraw-modal').classList.remove('hidden');
+    document.getElementById('withdraw-modal').scrollIntoView();
+  }
+
+  function closeWithdraw() { document.getElementById('withdraw-modal').classList.add('hidden'); }
+  
+  function changeWithdrawMethod() {
+    const method = document.getElementById('withdraw-method').value;
+    if(method === 'paypal') {
+      document.getElementById('paypal-field').classList.remove('hidden');
+      document.getElementById('bybit-field').classList.add('hidden');
+    } else {
+      document.getElementById('paypal-field').classList.add('hidden');
+      document.getElementById('bybit-field').classList.remove('hidden');
+    }
+  }
+
+  async function submitWithdraw() {
+    const method = document.getElementById('withdraw-method').value;
+    const amount = parseFloat(document.getElementById('withdraw-amount').value);
+    let paypal = '';
+    let bybit = '';
+    
+    if(method === 'paypal') {
+      paypal = document.getElementById('paypal-email').value;
+      if(!paypal) { alert('دخل إيميل PayPal'); return; }
+    } else {
+      bybit = document.getElementById('bybit-address').value;
+      if(!bybit || !bybit.startsWith('T')) { alert('دخل عنوان USDT TRC20 صحيح، كيبدا بـ T'); return; }
+    }
+    
+    if(!amount || amount < 10 || amount > userData.balance) {
+      alert('تأكد من المبلغ. الحد الأدنى 10$ وما تفوتش رصيدك');
+      return;
+    }
+    
+    await db.collection('withdrawals').add({
+      userId: currentUser.uid,
+      email: currentUser.email,
+      method: method,
+      paypal: paypal,
+      bybit: bybit,
+      amount: amount,
+      status: 'pending',
+      createdAt: new Date()
+    });
+    await db.collection('users').doc(currentUser.uid).update({
+      balance: userData.balance - amount
+    });
+    alert('تم إرسال طلب السحب. غادي نراجعوه ونرسلو لك الفلوس');
+    closeWithdraw();
+    loadUserData();
+  }
+</script>
+</body>
+</html>
