@@ -11,10 +11,10 @@
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap');
     body { font-family: 'Cairo', sans-serif; }
- .gold { color: #FFD700; }
- .bg-gold { background-color: #FFD700; }
- .btn-gold { background: linear-gradient(45deg, #FFD700, #FFA500); }
- .btn-gold:hover { background: linear-gradient(45deg, #FFA500, #FF8C00); }
+   .gold { color: #FFD700; }
+   .bg-gold { background-color: #FFD700; }
+   .btn-gold { background: linear-gradient(45deg, #FFD700, #FFA500); }
+   .btn-gold:hover { background: linear-gradient(45deg, #FFA500, #FF8C00); }
   </style>
 </head>
 <body class="bg-gray-900 text-white">
@@ -81,22 +81,18 @@
       <h3 class="text-2xl font-bold mb-4 gold">طلب سحب الأرباح</h3>
       <p class="mb-2">رصيدك الحالي: <span id="current-balance" class="gold font-bold">0.000$</span></p>
       <p class="mb-4 text-sm text-gray-400">الحد الأدنى للسحب: 10$</p>
-
       <label class="block mb-2">اختر طريقة السحب:</label>
       <select id="withdraw-method" onchange="changeWithdrawMethod()" class="w-full p-2 rounded bg-gray-700 mb-3 text-white">
         <option value="paypal">PayPal</option>
         <option value="bybit">Bybit USDT TRC20</option>
       </select>
-
       <div id="paypal-field">
         <input id="paypal-email" type="email" placeholder="إيميل PayPal ديالك" class="w-full p-2 rounded bg-gray-700 mb-3 text-white">
       </div>
-
       <div id="bybit-field" class="hidden">
         <input id="bybit-address" type="text" placeholder="عنوان محفظة USDT TRC20 ديال Bybit" class="w-full p-2 rounded bg-gray-700 mb-1 text-white">
         <p class="text-xs text-yellow-400 mb-3">⚠️ تأكد أن العنوان على شبكة TRC20 ويبدأ بـ T وإلا ستضيع الفلوس</p>
       </div>
-
       <input id="withdraw-amount" type="number" placeholder="المبلغ" class="w-full p-2 rounded bg-gray-700 mb-4 text-white">
       <button onclick="submitWithdraw()" class="w-full btn-gold text-black font-bold py-2 rounded-lg mb-2">إرسال الطلب</button>
       <button onclick="closeWithdraw()" class="w-full bg-gray-600 py-2 rounded-lg">إلغاء</button>
@@ -187,7 +183,6 @@
   }
 
   async function watchVideo(videoId) {
-    // نحيدو الحد اليومي - باقي غا تشك ديال الفيديو الواحد مرة وحدة فالنهار
     if(userData.watchedVideos.includes(videoId)) {
       alert('راك شاهدتي هاد الفيديو اليوم. قلب على فيديو آخر 💰');
       return;
