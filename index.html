@@ -78,21 +78,20 @@
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
 
     <script>
-        // 1. عوض هاد القيم بالقيم ديالك من Firebase
+        // 1. الكونفيج ديالك من Firebase ✅
         const firebaseConfig = {
-            apiKey: "YOUR_API_KEY",
-            authDomain: "YOUR_AUTH_DOMAIN",
-            projectId: "YOUR_PROJECT_ID",
-            storageBucket: "YOUR_STORAGE_BUCKET",
-            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-            appId: "YOUR_APP_ID"
+          apiKey: "AIzaSyC8tq5Ry9yVhcKbumQlbU4NE4JLHd-RRgE",
+          authDomain: "cashreel-f8198.firebaseapp.com",
+          projectId: "cashreel-f8198",
+          storageBucket: "cashreel-f8198.firebasestorage.app",
+          messagingSenderId: "969237019203",
+          appId: "1:969237019203:web:6e1c4124969d4f6f7c32f6",
+          measurementId: "G-B56V81GGVK"
         };
 
-        // 2. روابط Adsterra ديالك
-        const SMARTLINK_URL = "https://YOUR_SMARTLINK.com"; // عوضها بالرابط ديالك
-        const SOCIAL_BAR_SCRIPT = `
-            // حط هنا كود SocialBar ديالك من Adsterra
-        `;
+        // 2. روابط Adsterra ديالك ✅
+        const SMARTLINK_URL = "https://www.profitablecpmratenetwork.com/wyqf720j2p?key=e32d605e8d90f2fdb51e61e579728396";
+        const SOCIAL_BAR_SCRIPT = `<script src="https://pl29085009.profitablecpmratenetwork.com/f1/b5/64/f1b564b85d4f11bc10413d8c7c15e0c7.js"><\/script>`;
 
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
@@ -119,7 +118,7 @@
         });
 
         function showDashboard(user) {
-            document.getElementById('authModal').style.display = 'none'; // خبي المودال
+            document.getElementById('authModal').style.display = 'none';
             document.getElementById('homePage').style.display = 'none';
             document.getElementById('dashboard').style.display = 'block';
             document.getElementById('balanceDiv').style.display = 'flex';
@@ -190,7 +189,7 @@
         async function watchVideo() {
             if (!currentUser) return;
             
-            // 1. فتح إعلان Smartlink
+            // 1. فتح إعلان Smartlink ✅
             window.open(SMARTLINK_URL, '_blank');
 
             // 2. زيادة الرصيد
@@ -208,7 +207,7 @@
             }
         }
 
-        // تشغيل كود SocialBar
+        // تشغيل كود SocialBar ✅
         document.write(SOCIAL_BAR_SCRIPT);
     </script>
 </body>
