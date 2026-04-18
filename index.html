@@ -1,30 +1,3 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CashReel - اربح من مشاهدة الفيديوهات</title>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, sans-serif; }
-        body { background: #0f172a; color: white; }
-        .container { max-width: 600px; margin: 0 auto; padding: 20px; }
-        .header { display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-bottom: 1px solid #334155; }
-        .logo { font-size: 24px; font-weight: bold; color: #fbbf24; }
-        .balance { background: #1e293b; padding: 8px 15px; border-radius: 20px; display: flex; align-items: center; gap: 8px; }
-        .main { text-align: center; margin-top: 80px; }
-        .main h1 { font-size: 36px; margin-bottom: 15px; }
-        .main h1 span { color: #fbbf24; }
-        .main p { color: #94a3b8; margin-bottom: 30px; }
-        .btn { background: linear-gradient(90deg, #fbbf24, #f59e0b); color: #0f172a; border: none; padding: 15px 40px; border-radius: 12px; font-size: 18px; font-weight: bold; cursor: pointer; }
-        .btn:disabled { opacity: 0.5; cursor: not-allowed; }
-        .logout-btn { background: #dc2626; color: white; padding: 8px 15px; border-radius: 8px; border: none; cursor: pointer; }
-        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); justify-content: center; align-items: center; z-index: 1000; }
-        .modal-content { background: #1e293b; padding: 30px; border-radius: 15px; width: 90%; max-width: 400px; text-align: center; }
-        .modal-content h2 { margin-bottom: 20px; }
-        .modal-content input { width: 100%; padding: 12px; margin-bottom: 15px; border-radius: 8px; border: 1px solid #334155; background: #0f172a; color: white; }
-        .modal-content .btn { width: 100%; margin-bottom: 10px; }
-        .modal-content .btn-secondary { background: #334155; color: white; }
-        #dashboard { display: none; }
         #userEmail { font-size: 14px; color: #94a3b8; }
     </style>
 </head>
@@ -40,31 +13,31 @@
                     <span id="userBalance">0.000$</span>
                     <span>💰</span>
                 </div>
-                <button class="logout-btn" id="logoutBtn" onclick="logoutUser()" style="display:none;">خروج</button>
+                <button class="logout-btn" id="logoutBtn" onclick="logoutUser()" style="display:none;">Logout</button>
             </div>
         </div>
 
         <div class="main" id="homePage">
-            <h1>اربح <span>فلوس لا محدودة</span><br>من مشاهدة الفيديوهات</h1>
-            <p>شاهد فيديوهات بلا حدود، كل فيديو يعطيك $0.003</p>
-            <button class="btn" onclick="openAuthModal()">ابدأ الربح الآن</button>
+            <h1>Earn <span>Unlimited Money</span><br>Watching Videos</h1>
+            <p>Watch unlimited videos, each video gives you $0.003</p>
+            <button class="btn" onclick="openAuthModal()">Start Earning Now</button>
         </div>
 
         <div class="main" id="dashboard">
-            <h1>مرحبا بك فـ CashReel 💰</h1>
-            <p>اضغط على الزر وشاهد الإعلان لتربح 0.003$</p>
-            <button class="btn" id="watchAdBtn" onclick="watchVideo()">شاهد إعلان واربح الآن</button>
+            <h1>Welcome to CashReel 💰</h1>
+            <p>Click the button and watch the ad to earn $0.003</p>
+            <button class="btn" id="watchAdBtn" onclick="watchVideo()">Watch Ad & Earn Now</button>
         </div>
     </div>
 
     <div class="modal" id="authModal">
         <div class="modal-content">
-            <h2 id="modalTitle">تسجيل الدخول</h2>
-            <input type="email" id="email" placeholder="البريد الإلكتروني">
-            <input type="password" id="password" placeholder="كلمة المرور">
-            <button class="btn" onclick="loginUser()">تسجيل الدخول</button>
-            <button class="btn btn-secondary" onclick="signupUser()">إنشاء حساب جديد</button>
-            <button class="btn btn-secondary" onclick="closeAuthModal()">إلغاء</button>
+            <h2 id="modalTitle">Login</h2>
+            <input type="email" id="email" placeholder="Email">
+            <input type="password" id="password" placeholder="Password">
+            <button class="btn" onclick="loginUser()">Login</button>
+            <button class="btn btn-secondary" onclick="signupUser()">Create New Account</button>
+            <button class="btn btn-secondary" onclick="closeAuthModal()">Cancel</button>
         </div>
     </div>
 
@@ -73,7 +46,7 @@
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
 
     <script>
-        // 1. Firebase Config ✅
+        // 1. Firebase Config
         const firebaseConfig = {
           apiKey: "AIzaSyC8tq5Ry9yVhcKbumQlbU4NE4JLHd-RRgE",
           authDomain: "cashreel-f8198.firebaseapp.com",
@@ -84,7 +57,7 @@
           measurementId: "G-B56V81GGVK"
         };
 
-        // 2. Adsterra Links ديالك ✅ مدخولين خلاص
+        // 2. Your Adsterra Links - هاهو السمارت لينك هنا 👇
         const SMARTLINK_URL = "https://www.profitablecpmratenetwork.com/wyqf720j2p?key=e32d605e8d90f2fdb51e61e579728396";
         const SOCIAL_BAR_SCRIPT = `<script src="https://pl29085009.profitablecpmratenetwork.com/f1/b5/64/f1b564b85d4f11bc10413d8c7c15e0c7.js"><\/script>`;
 
@@ -137,7 +110,7 @@
             const password = document.getElementById('password').value;
             auth.signInWithEmailAndPassword(email, password)
                 .then(() => closeAuthModal())
-                .catch(error => alert('خطأ: ' + error.message));
+                .catch(error => alert('Error: ' + error.message));
         }
 
         function signupUser() {
@@ -152,7 +125,7 @@
                     });
                 })
                 .then(() => closeAuthModal())
-                .catch(error => alert('خطأ: ' + error.message));
+                .catch(error => alert('Error: ' + error.message));
         }
 
         function logoutUser() {
@@ -170,10 +143,10 @@
         async function watchVideo() {
             if (!currentUser) return;
             
-            // فتح إعلان Smartlink ✅
+            // Open Smartlink Ad - وهنا كايستعمل 👇
             window.open(SMARTLINK_URL, '_blank');
 
-            // زيادة الرصيد
+            // Update Balance
             const userRef = db.collection('users').doc(currentUser.uid);
             try {
                 await db.runTransaction(async (transaction) => {
@@ -188,7 +161,7 @@
             }
         }
 
-        // تشغيل كود SocialBar ✅
+        // Run SocialBar Script
         document.write(SOCIAL_BAR_SCRIPT);
     </script>
 </body>
