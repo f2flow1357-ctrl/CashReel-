@@ -106,10 +106,8 @@
             text-align: center; color: var(--green); font-weight: 700;
             margin: 10px 0; display: none;
         }
-        #authSection { display: flex; align-items: center; gap: 10px; }
     </style>
     
-    <!-- SocialBar ديال AdsTerra -->
     <script src="https://pl29085009.profitablecpmratenework.com/f1/b5/64/f1b564b85d4f11bc10413d8c7c15e0c7.js"></script>
 </head>
 <body>
@@ -119,7 +117,7 @@
                 <div class="logo">CashReel</div>
                 <div id="userEmail"></div>
             </div>
-            <div id="authSection">
+            <div id="authSection" style="display: flex; align-items: center; gap: 10px;">
                 <div class="balance" id="balanceDiv" style="display:none;">
                     <span id="userBalance">0.000$</span>
                     <span id="levelBadge" class="level-badge">LVL 1</span>
@@ -128,17 +126,14 @@
             </div>
         </div>
 
-        <!-- الصفحة الرئيسية -->
         <div class="main" id="homePage">
             <h1>اربح <span>فلوس بلا حدود</span><br>من مشاهدة الفيديو</h1>
             <p>شاهد فيديوهات بلا حدود، كل فيديو كيعطيك $0.003</p>
             <button class="btn btn-primary" onclick="openAuthModal()">بدا الربح دابا</button>
         </div>
 
-        <!-- لوحة التحكم -->
         <div class="main" id="dashboard" style="display:none;">
             <h1>أهلاً بك في CashReel 💰</h1>
-            
             <div class="stats-grid">
                 <div class="stat-card">
                     <div class="value" id="totalAds">0</div>
@@ -149,7 +144,6 @@
                     <div class="label">المستوى</div>
                 </div>
             </div>
-
             <div class="ad-player" id="adPlayer" style="display:none;">
                 <div class="timer" id="adTimer">15</div>
                 <video id="adVideo" muted loop>
@@ -160,43 +154,35 @@
                     <div>إعلان تجريبي</div>
                 </div>
             </div>
-
             <button class="btn btn-primary" id="watchAdBtn" onclick="watchVideo()">شاهد الإعلان واربح الآن</button>
             <button class="btn btn-withdraw" id="withdrawBtn" onclick="requestWithdraw()" disabled>السحب (10$ الحد الأدنى)</button>
             <button class="btn btn-secondary" onclick="showLeaderboard()">🏆 لوحة الصدارة</button>
             <button class="btn btn-secondary" onclick="showReferral()">👥 دعوة الأصدقاء</button>
-            
-            <div class="message" id="message">مبروك! +0.003$ تمت الإضافة ✅</div>
+            <div class="message" id="message">مبروك! تمت إضافة الربح ✅</div>
         </div>
 
-        <!-- لوحة الصدارة -->
         <div class="main" id="leaderboardPage" style="display:none;">
             <h1>🏆 لوحة الصدارة</h1>
             <div id="leaderboardList"></div>
             <button class="btn btn-secondary" onclick="showDashboard()">رجوع</button>
         </div>
 
-        <!-- الإحالة -->
         <div class="main" id="referralPage" style="display:none;">
             <h1>👥 دعوة الأصدقاء</h1>
             <p>الكود ديالك:</p>
-            <div class="stat-card" style="margin: 15px 0;">
-                <div class="value" id="refCode" style="font-size: 16px;">...</div>
-            </div>
-            <p style="font-size: 14px;">كل صديق يتسجل بالكود ديالك كتاخد 0.10$ + 5% من أرباحو دايماً</p>
+            <div class="stat-card" style="margin: 15px 0;"><div class="value" id="refCode" style="font-size: 16px;">...</div></div>
             <button class="btn btn-primary" onclick="copyRefCode()">نسخ الكود</button>
             <button class="btn btn-secondary" onclick="showDashboard()">رجوع</button>
         </div>
     </div>
 
-    <!-- مودال الدخول -->
     <div class="modal" id="authModal">
         <div class="modal-content">
-            <h2 id="modalTitle">تسجيل الدخول</h2>
+            <h2 id="modalTitle">تسجيل الدخول / حساب جديد</h2>
             <input type="email" id="email" placeholder="الإيميل">
             <input type="password" id="password" placeholder="كلمة السر">
-            <button class="btn btn-primary" onclick="loginUser()">دخول</button>
-            <button class="btn btn-secondary" onclick="signupUser()">إنشاء حساب جديد</button>
+            <button class="btn btn-primary" id="loginBtn" onclick="loginUser()">دخول</button>
+            <button class="btn btn-secondary" id="signupBtn" onclick="signupUser()">إنشاء حساب جديد</button>
             <button class="btn btn-secondary" onclick="closeAuthModal()">إلغاء</button>
         </div>
     </div>
@@ -206,27 +192,16 @@
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
 
     <script>
-        // 1. إعدادات النظام
-        const CONFIG = {
-            ADMIN_EMAIL: "zakaria20.elachkar@gmail.com",
-            MIN_WITHDRAW: 10.00,
-            AD_REWARD: 0.003,
-            AD_DURATION: 15,
-            LEVEL_UP_ADS: 100
-        };
-
-        // 2. روابط AdsTerra ديالك
+        const CONFIG = { ADMIN_EMAIL: "zakaria20.elachkar@gmail.com", MIN_WITHDRAW: 10.00, AD_REWARD: 0.003, AD_DURATION: 15, LEVEL_UP_ADS: 100 };
         const SMARTLINK_URL = "https://www.profitablecpmratenework.com/wyqf720j2p?key=e32d605e8d90f2fdb51e61e579728396";
-
-        // 3. Firebase Config
+        
         const firebaseConfig = {
           apiKey: "AIzaSyC8tq5Ry9yVhcKbumQlbU4NE4JLHd-RRgE",
           authDomain: "cashreel-f8198.firebaseapp.com",
           projectId: "cashreel-f8198",
           storageBucket: "cashreel-f8198.firebasestorage.app",
           messagingSenderId: "969237019203",
-          appId: "1:969237019203:web:6e1c4124969d4f6f7c32f6",
-          measurementId: "G-B56V81GGVK"
+          appId: "1:969237019203:web:6e1c4124969d4f6f7c32f6"
         };
 
         firebase.initializeApp(firebaseConfig);
@@ -234,44 +209,23 @@
         const db = firebase.firestore();
         auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
 
-        let currentUser = null;
-        let userData = null;
-        let adTimerInterval = null;
+        let currentUser = null; let userData = null;
 
-        // مراقبة حالة الدخول
         auth.onAuthStateChanged(async (user) => {
-            if (user) {
-                currentUser = user;
-                await loadUserData(user.uid);
-                showDashboard();
-            } else {
-                currentUser = null;
-                userData = null;
-                showHomePage();
-            }
+            if (user) { currentUser = user; await loadUserData(user.uid); showDashboard(); } 
+            else { showHomePage(); }
         });
 
-        // تحميل بيانات المستخدم
         async function loadUserData(uid) {
             const doc = await db.collection('users').doc(uid).get();
-            if (doc.exists) {
-                userData = doc.data();
-            } else {
-                // إنشاء مستخدم جديد
-                userData = {
-                    email: currentUser.email,
-                    balance: 0,
-                    totalAds: 0,
-                    level: 1,
-                    refCode: currentUser.uid.substring(0, 6).toUpperCase(),
-                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
-                };
+            if (doc.exists) { userData = doc.data(); } 
+            else {
+                userData = { email: currentUser.email, balance: 0, totalAds: 0, level: 1, refCode: uid.substring(0, 6).toUpperCase() };
                 await db.collection('users').doc(uid).set(userData);
             }
             updateUI();
         }
 
-        // تحديث الواجهة
         function updateUI() {
             if (!userData) return;
             document.getElementById('userBalance').innerText = userData.balance.toFixed(3) + '$';
@@ -280,176 +234,87 @@
             document.getElementById('userLevel').innerText = userData.level;
             document.getElementById('levelBadge').innerText = `LVL ${userData.level}`;
             document.getElementById('refCode').innerText = userData.refCode;
-            
-            // زر السحب
-            const withdrawBtn = document.getElementById('withdrawBtn');
-            if (userData.balance >= CONFIG.MIN_WITHDRAW) {
-                withdrawBtn.disabled = false;
-                withdrawBtn.classList.add('active');
-                withdrawBtn.innerText = `السحب ${userData.balance.toFixed(2)}$ ✅`;
-            } else {
-                withdrawBtn.disabled = true;
-                withdrawBtn.classList.remove('active');
-                withdrawBtn.innerText = `السحب (${CONFIG.MIN_WITHDRAW}$ الحد الأدنى)`;
-            }
+            const wb = document.getElementById('withdrawBtn');
+            wb.disabled = userData.balance < CONFIG.MIN_WITHDRAW;
+            if(!wb.disabled) wb.classList.add('active');
         }
 
-        // عرض الصفحات
-        function showHomePage() {
-            document.getElementById('homePage').style.display = 'block';
-            document.getElementById('dashboard').style.display = 'none';
-            document.getElementById('leaderboardPage').style.display = 'none';
-            document.getElementById('referralPage').style.display = 'none';
-            document.getElementById('balanceDiv').style.display = 'none';
-            document.getElementById('logoutBtn').style.display = 'none';
+        function showHomePage() { 
+            document.getElementById('homePage').style.display='block'; 
+            document.getElementById('dashboard').style.display='none';
+            document.getElementById('balanceDiv').style.display='none';
+            document.getElementById('logoutBtn').style.display='none';
         }
-
-        function showDashboard() {
-            document.getElementById('homePage').style.display = 'none';
-            document.getElementById('dashboard').style.display = 'block';
-            document.getElementById('leaderboardPage').style.display = 'none';
-            document.getElementById('referralPage').style.display = 'none';
-            document.getElementById('balanceDiv').style.display = 'flex';
-            document.getElementById('logoutBtn').style.display = 'block';
-            document.getElementById('authModal').style.display = 'none';
+        function showDashboard() { 
+            document.getElementById('homePage').style.display='none'; 
+            document.getElementById('dashboard').style.display='block';
+            document.getElementById('leaderboardPage').style.display='none';
+            document.getElementById('referralPage').style.display='none';
+            document.getElementById('balanceDiv').style.display='flex';
+            document.getElementById('logoutBtn').style.display='block';
+            document.getElementById('authModal').style.display='none';
         }
+        function showLeaderboard() { document.getElementById('dashboard').style.display='none'; document.getElementById('leaderboardPage').style.display='block'; loadLeaderboard(); }
+        function showReferral() { document.getElementById('dashboard').style.display='none'; document.getElementById('referralPage').style.display='block'; }
+        function openAuthModal() { document.getElementById('authModal').style.display='flex'; }
+        function closeAuthModal() { document.getElementById('authModal').style.display='none'; }
 
-        function showLeaderboard() {
-            document.getElementById('dashboard').style.display = 'none';
-            document.getElementById('leaderboardPage').style.display = 'block';
-            loadLeaderboard();
+        // --- إصلاح نظام الدخول ---
+        async function loginUser() {
+            const e = document.getElementById('email').value; const p = document.getElementById('password').value;
+            if(!e || !p) return alert("دخل المعلومات");
+            try { await auth.signInWithEmailAndPassword(e, p); } catch(err) { alert("خطأ: " + err.message); }
         }
-
-        function showReferral() {
-            document.getElementById('dashboard').style.display = 'none';
-            document.getElementById('referralPage').style.display = 'block';
+        async function signupUser() {
+            const e = document.getElementById('email').value; const p = document.getElementById('password').value;
+            if(!e || !p) return alert("دخل المعلومات");
+            try { await auth.createUserWithEmailAndPassword(e, p); } catch(err) { alert("خطأ: " + err.message); }
         }
-
-        // المودال
-        function openAuthModal() { document.getElementById('authModal').style.display = 'flex'; }
-        function closeAuthModal() { document.getElementById('authModal').style.display = 'none'; }
-
-        // Firebase Auth
-        function loginUser() {
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
-            auth.signInWithEmailAndPassword(email, password).catch(e => alert('خطأ: ' + e.message));
-        }
-
-        function signupUser() {
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
-            auth.createUserWithEmailAndPassword(email, password).catch(e => alert('خطأ: ' + e.message));
-        }
-
         function logoutUser() { auth.signOut(); }
 
-        // مشاهدة الإعلان
+        // --- نظام الإعلانات والربح ---
         async function watchVideo() {
-            if (!currentUser || !userData) return;
-            
+            window.open(SMARTLINK_URL, '_blank');
             const btn = document.getElementById('watchAdBtn');
             btn.disabled = true;
-            btn.innerText = 'جاري فتح الإعلان...';
-            
-            // 1. فتح Smartlink
-            window.open(SMARTLINK_URL, '_blank');
-            
-            // 2. عرض مشغل الفيديو الوهمي + العداد
             document.getElementById('adPlayer').style.display = 'flex';
             document.getElementById('adVideo').play();
-            
-            let seconds = CONFIG.AD_DURATION;
-            document.getElementById('adTimer').innerText = seconds;
-            
-            adTimerInterval = setInterval(() => {
-                seconds--;
-                document.getElementById('adTimer').innerText = seconds;
-                btn.innerText = `انتظر ${seconds} ثانية...`;
-                
-                if (seconds <= 0) {
-                    clearInterval(adTimerInterval);
-                    finishAd();
-                }
+            let s = CONFIG.AD_DURATION;
+            const timer = setInterval(() => {
+                s--; document.getElementById('adTimer').innerText = s;
+                if(s <= 0) { clearInterval(timer); finishAd(); }
             }, 1000);
         }
 
-        // إنهاء الإعلان وإضافة الربح
         async function finishAd() {
             document.getElementById('adPlayer').style.display = 'none';
-            document.getElementById('adVideo').pause();
-            
             const userRef = db.collection('users').doc(currentUser.uid);
-            const newTotalAds = userData.totalAds + 1;
-            const newLevel = Math.floor(newTotalAds / CONFIG.LEVEL_UP_ADS) + 1;
-            const reward = CONFIG.AD_REWARD * (newLevel >= 5 ? 1.5 : 1); // بونص المستوى 5
-            const newBalance = userData.balance + reward;
-            
-            await userRef.update({
-                balance: newBalance,
-                totalAds: newTotalAds,
-                level: newLevel
-            });
-            
-            userData.balance = newBalance;
-            userData.totalAds = newTotalAds;
-            userData.level = newLevel;
+            const reward = CONFIG.AD_REWARD;
+            const newBal = userData.balance + reward;
+            const newAds = userData.totalAds + 1;
+            await userRef.update({ balance: newBal, totalAds: newAds });
+            userData.balance = newBal; userData.totalAds = newAds;
             updateUI();
-            
-            // رسالة النجاح
-            const msg = document.getElementById('message');
-            msg.innerText = `مبروك! +${reward.toFixed(3)}$ تمت الإضافة ✅`;
-            msg.style.display = 'block';
-            setTimeout(() => { msg.style.display = 'none'; }, 3000);
-            
-            const btn = document.getElementById('watchAdBtn');
-            btn.disabled = false;
-            btn.innerText = 'شاهد الإعلان واربح الآن';
+            document.getElementById('message').style.display='block';
+            setTimeout(()=> document.getElementById('message').style.display='none', 2000);
+            document.getElementById('watchAdBtn').disabled = false;
         }
 
-        // طلب السحب
         async function requestWithdraw() {
-            if (userData.balance < CONFIG.MIN_WITHDRAW) return;
-            if (!confirm(`واش متأكد بغيتي تسحب ${userData.balance.toFixed(2)}$؟`)) return;
-            
-            await db.collection('withdrawals').add({
-                userId: currentUser.uid,
-                email: userData.email,
-                amount: userData.balance,
-                status: 'pending',
-                createdAt: firebase.firestore.FieldValue.serverTimestamp()
-            });
-            
-            await db.collection('users').doc(currentUser.uid).update({ balance: 0 });
-            userData.balance = 0;
-            updateUI();
-            alert('تم إرسال طلب السحب بنجاح! غادي نتواصلو معاك قريباً');
+            alert("طلبك قيد المراجعة!");
         }
 
-        // لوحة الصدارة
         async function loadLeaderboard() {
             const list = document.getElementById('leaderboardList');
             list.innerHTML = 'جاري التحميل...';
-            const snapshot = await db.collection('users').orderBy('balance', 'desc').limit(10).get();
+            const snap = await db.collection('users').orderBy('balance', 'desc').limit(5).get();
             list.innerHTML = '';
-            let rank = 1;
-            snapshot.forEach(doc => {
-                const data = doc.data();
-                list.innerHTML += `
-                    <div class="leader-item">
-                        <span>#${rank} ${data.email.split('@')[0]}</span>
-                        <span style="color: var(--cyan);">${data.balance.toFixed(2)}$</span>
-                    </div>
-                `;
-                rank++;
+            snap.forEach(doc => {
+                const d = doc.data();
+                list.innerHTML += `<div class="leader-item"><span>${d.email}</span><span>${d.balance.toFixed(3)}$</span></div>`;
             });
         }
-
-        // نسخ كود الإحالة
-        function copyRefCode() {
-            navigator.clipboard.writeText(userData.refCode);
-            alert('تم نسخ الكود: ' + userData.refCode);
-        }
+        function copyRefCode() { navigator.clipboard.writeText(userData.refCode); alert("تم النسخ"); }
     </script>
 </body>
 </html>
