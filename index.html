@@ -1,153 +1,142 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CashReel - شاهد واربح مبالغ حقيقية</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <title>CashReel - Watch & Earn Real Money</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --bg-dark: #0F0F0F;
-            --card-dark: #1E1E1E;
-            --text-white: #FFFFFF;
-            --text-gray: #94a3b8;
-            --pink: #FF0050;
-            --cyan: #00F2EA;
-            --green: #00C851;
-            --yellow: #FFD700;
+            --primary: #FF0050;
+            --secondary: #00F2EA;
+            --dark-bg: #0F0F0F;
+            --card-bg: #1E1E1E;
+            --white: #FFFFFF;
+            --gray: #94a3b8;
         }
+
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Cairo', sans-serif; background: var(--bg-dark); color: var(--text-white); min-height: 100vh; overflow-x: hidden; }
-        .container { max-width: 500px; margin: 0 auto; padding: 20px; }
+        body { font-family: 'Poppins', sans-serif; background: var(--dark-bg); color: var(--white); overflow-x: hidden; }
+        .container { max-width: 480px; margin: 0 auto; padding: 20px; min-height: 100vh; }
+
+        /* Header */
+        header { display: flex; justify-content: space-between; align-items: center; padding: 20px 0; border-bottom: 1px solid #333; }
+        .logo { font-size: 24px; font-weight: 800; color: var(--primary); letter-spacing: -1px; }
+        .balance-pill { background: var(--card-bg); padding: 8px 16px; border-radius: 30px; border: 1px solid var(--secondary); display: flex; align-items: center; gap: 8px; }
+        .balance-pill span { font-weight: 700; color: var(--secondary); }
+
+        /* Dashboard */
+        .dashboard { display: none; animation: fadeIn 0.5s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin: 25px 0; }
+        .stat-box { background: var(--card-bg); padding: 20px; border-radius: 15px; text-align: center; border: 1px solid #222; }
+        .stat-box i { font-size: 20px; color: var(--primary); margin-bottom: 10px; }
+        .stat-box h3 { font-size: 22px; font-weight: 700; }
+        .stat-box p { font-size: 12px; color: var(--gray); text-transform: uppercase; }
+
+        .ad-area { background: #000; height: 320px; border-radius: 20px; display: flex; flex-direction: column; align-items: center; justify-content: center; margin: 20px 0; border: 2px dashed #444; position: relative; }
+        .timer-ring { font-size: 60px; font-weight: 800; color: #FFD700; }
         
-        /* الهيدر والمحفظة */
-        .header { display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-bottom: 1px solid #333; margin-bottom: 20px; }
-        .logo { font-size: 26px; font-weight: 900; color: var(--pink); text-transform: uppercase; letter-spacing: 1px; }
-        .balance { display: flex; align-items: center; gap: 8px; background: var(--card-dark); padding: 8px 15px; border-radius: 20px; border: 1px solid var(--cyan); }
-        #userBalance { font-size: 18px; font-weight: 700; color: var(--cyan); }
-        .logout-btn { background: #333; color: var(--text-white); border: none; padding: 8px 15px; border-radius: 8px; cursor: pointer; font-weight: 600; }
+        /* Buttons */
+        .btn { width: 100%; padding: 18px; border: none; border-radius: 14px; font-size: 16px; font-weight: 700; cursor: pointer; transition: 0.3s; display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 12px; }
+        .btn-main { background: var(--primary); color: white; box-shadow: 0 10px 20px rgba(255, 0, 80, 0.2); }
+        .btn-main:disabled { opacity: 0.5; cursor: not-allowed; }
+        .btn-outline { background: transparent; border: 1px solid #333; color: white; }
 
-        /* واجهة المستخدم الرئيسية */
-        .main { text-align: center; padding: 20px 0; animation: fadeIn 0.5s ease; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        
-        .main h1 { font-size: 32px; margin-bottom: 15px; line-height: 1.2; }
-        .main h1 span { color: var(--pink); }
-        .main p { color: var(--text-gray); margin-bottom: 25px; font-size: 16px; }
+        /* Auth Modal */
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 1000; align-items: center; justify-content: center; }
+        .modal-content { background: var(--card-bg); width: 90%; max-width: 400px; padding: 30px; border-radius: 25px; border: 1px solid #333; }
+        input { width: 100%; padding: 15px; margin: 10px 0; background: #000; border: 1px solid #333; border-radius: 10px; color: white; outline: none; }
+        input:focus { border-color: var(--primary); }
 
-        .btn { width: 100%; padding: 16px; border: none; border-radius: 12px; font-size: 16px; font-weight: 700; cursor: pointer; margin: 8px 0; transition: all 0.3s; display: flex; align-items: center; justify-content: center; gap: 10px; }
-        .btn-primary { background: var(--pink); color: white; box-shadow: 0 4px 15px rgba(255, 0, 80, 0.3); }
-        .btn-primary:active { transform: scale(0.98); }
-        .btn-secondary { background: var(--card-dark); color: var(--text-white); border: 1px solid #333; }
-        .btn-withdraw { background: #555; color: #999; cursor: not-allowed; }
-        .btn-withdraw.active { background: var(--green); color: white; cursor: pointer; box-shadow: 0 4px 15px rgba(0, 200, 81, 0.3); }
+        /* Leaderboard */
+        .list-item { display: flex; justify-content: space-between; padding: 15px; background: var(--card-bg); margin-bottom: 10px; border-radius: 12px; }
 
-        /* شبكة الإحصائيات */
-        .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 20px 0; }
-        .stat-card { background: var(--card-dark); padding: 15px; border-radius: 15px; border: 1px solid #222; }
-        .stat-card .value { font-size: 22px; font-weight: 800; color: var(--cyan); }
-        .stat-card .label { font-size: 12px; color: var(--text-gray); text-transform: uppercase; margin-top: 5px; }
-
-        /* منطقة مشغل الإعلانات */
-        .ad-container { background: #000; border-radius: 20px; height: 300px; display: flex; flex-direction: column; align-items: center; justify-content: center; margin: 20px 0; position: relative; overflow: hidden; border: 2px dashed #333; }
-        .timer-display { font-size: 50px; font-weight: 900; color: var(--yellow); text-shadow: 0 0 20px rgba(255, 215, 0, 0.5); }
-        .ad-status { color: var(--text-gray); margin-top: 10px; font-weight: 600; }
-
-        /* لوحة الصدارة */
-        .leader-item { display: flex; justify-content: space-between; align-items: center; padding: 12px 20px; background: var(--card-dark); margin: 8px 0; border-radius: 10px; border-left: 4px solid var(--pink); }
-
-        /* النوافذ المنبثقة */
-        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); justify-content: center; align-items: center; z-index: 2000; backdrop-filter: blur(5px); }
-        .modal-content { background: var(--card-dark); padding: 30px; border-radius: 20px; width: 90%; max-width: 400px; border: 1px solid #333; }
-        .modal-content h2 { margin-bottom: 20px; font-size: 24px; text-align: center; }
-        .modal-content input { width: 100%; padding: 14px; margin: 10px 0; border-radius: 10px; border: 1px solid #333; background: #000; color: white; font-size: 16px; outline: none; text-align: center; }
-
-        .message { text-align: center; color: var(--green); font-weight: 700; margin: 15px 0; display: none; padding: 10px; background: rgba(0, 200, 81, 0.1); border-radius: 8px; }
+        .msg-success { color: #00C851; background: rgba(0, 200, 81, 0.1); padding: 10px; border-radius: 8px; margin: 10px 0; display: none; }
     </style>
-    <script src="https://pl29085009.profitablecpmratenework.com/f1/b5/64/f1b564b85d4f11bc10413d8c7c15e0c7.js"></script>
 </head>
 <body>
     <div class="container">
-        <div class="header">
-            <div class="logo">CashReel</div>
-            <div style="display: flex; gap: 10px; align-items: center;">
-                <div class="balance" id="balanceDiv" style="display:none;">
-                    <span id="userBalance">0.000$</span>
-                </div>
-                <button class="logout-btn" id="logoutBtn" onclick="logoutUser()" style="display:none;">خروج</button>
+        <header>
+            <div class="logo">CASHREEL</div>
+            <div class="balance-pill" id="balanceDisplay" style="display:none;">
+                <i class="fas fa-wallet"></i>
+                <span id="userBalance">0.000</span>$
             </div>
+        </header>
+
+        <div id="welcomeScreen" style="text-align:center; padding-top: 60px;">
+            <h1 style="font-size: 38px; line-height: 1.1;">Watch Ads<br><span style="color:var(--primary)">Get Paid.</span></h1>
+            <p style="color:var(--gray); margin: 20px 0;">Earn $0.003 for every 15-second ad you watch. Join 5,000+ users today.</p>
+            <button class="btn btn-main" onclick="toggleModal(true)">START EARNING NOW</button>
         </div>
 
-        <div id="homePage" class="main">
-            <h1>ابدأ <span>الربح</span><br>اليوم بسهولة</h1>
-            <p>انضم لآلاف المستخدمين واربح $0.003 مقابل كل إعلان تشاهده. سحب فوري!</p>
-            <button class="btn btn-primary" onclick="openAuthModal()">
-                <i class="fas fa-rocket"></i> ابدأ الربح الآن
-            </button>
-            <p style="font-size: 12px; margin-top: 15px;">لا يحتاج لاستثمار. مجاني 100%.</p>
-        </div>
-
-        <div id="dashboard" class="main" style="display:none;">
+        <div id="dashboard" class="dashboard">
             <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="value" id="totalAds">0</div>
-                    <div class="label">إعلانات شاهدتها</div>
+                <div class="stat-box">
+                    <i class="fas fa-eye"></i>
+                    <h3 id="totalAds">0</h3>
+                    <p>Total Ads</p>
                 </div>
-                <div class="stat-card">
-                    <div class="value" id="userLevel">1</div>
-                    <div class="label">المستوى الحالي</div>
+                <div class="stat-box">
+                    <i class="fas fa-trophy"></i>
+                    <h3 id="userLevel">1</h3>
+                    <p>Level</p>
                 </div>
             </div>
 
-            <div class="ad-container" id="adPlayer" style="display:none;">
-                <div class="timer-display" id="adTimer">15</div>
-                <div class="ad-status">جاري عرض الإعلان المدفوع...</div>
-                <p style="font-size: 12px; color: #555; margin-top: 20px;">يرجى عدم إغلاق الصفحة</p>
+            <div class="ad-area" id="adPlayer" style="display:none;">
+                <div class="timer-ring" id="countDown">15</div>
+                <p style="font-weight: 600;">LOADING SPONSORED CONTENT...</p>
             </div>
 
-            <button class="btn btn-primary" id="watchAdBtn" onclick="watchVideo()">
-                <i class="fas fa-play-circle"></i> شاهد الإعلان واربح الآن
+            <button class="btn btn-main" id="watchBtn" onclick="handleWatchAd()">
+                <i class="fas fa-play-circle"></i> WATCH AD & EARN
+            </button>
+
+            <button class="btn btn-outline" onclick="showSection('leaderboard')">
+                <i class="fas fa-chart-line"></i> TOP EARNERS
             </button>
             
-            <button class="btn btn-withdraw" id="withdrawBtn" onclick="requestWithdraw()" disabled>
-                <i class="fas fa-wallet"></i> سحب الأرباح (الحد الأدنى 10$)
+            <button class="btn btn-outline" onclick="showSection('referral')">
+                <i class="fas fa-users"></i> REFERRAL PROGRAM
             </button>
 
-            <div class="message" id="message">مبروك! +$0.003 تمت الإضافة ✅</div>
+            <button class="btn btn-outline" style="margin-top: 40px; color: #ff4444;" onclick="logout()">
+                <i class="fas fa-sign-out-alt"></i> LOGOUT
+            </button>
+        </div>
 
-            <div style="margin-top: 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
-                <button class="btn btn-secondary" onclick="showLeaderboard()">🏆 المتصدرين</button>
-                <button class="btn btn-secondary" onclick="showReferral()">👥 نظام الإحالة</button>
+        <div id="leaderboard" style="display:none; padding-top: 20px;">
+            <h2 style="margin-bottom: 20px;">🏆 Leaderboard</h2>
+            <div id="leaderList"></div>
+            <button class="btn btn-outline" onclick="showSection('dashboard')">BACK</button>
+        </div>
+
+        <div id="referral" style="display:none; padding-top: 20px;">
+            <h2>👥 Invite Friends</h2>
+            <p style="color:var(--gray); margin: 15px 0;">Share your code and earn 5% of your friends' rewards forever!</p>
+            <div class="stat-box">
+                <h3 id="myRefCode">...</h3>
+                <p>YOUR CODE</p>
             </div>
+            <button class="btn btn-main" onclick="copyRef()">COPY CODE</button>
+            <button class="btn btn-outline" onclick="showSection('dashboard')">BACK</button>
         </div>
 
-        <div id="leaderboardPage" class="main" style="display:none;">
-            <h2>🏆 أفضل الرابحين</h2>
-            <div id="leaderboardList" style="margin: 20px 0;"></div>
-            <button class="btn btn-secondary" onclick="showDashboard()">الرجوع للوحة التحكم</button>
-        </div>
-
-        <div id="referralPage" class="main" style="display:none;">
-            <h2>👥 دعوة الأصدقاء</h2>
-            <p>شارك الكود الخاص بك واربح 5% من أرباحهم!</p>
-            <div class="stat-card" style="margin: 20px 0;">
-                <div class="value" id="refCode">...</div>
-                <div class="label">كود الإحالة الخاص بك</div>
-            </div>
-            <button class="btn btn-primary" onclick="copyRefCode()">نسخ الكود</button>
-            <button class="btn btn-secondary" onclick="showDashboard()">رجوع</button>
-        </div>
+        <div class="msg-success" id="rewardMsg">Success! +$0.003 added to your wallet. ✅</div>
     </div>
 
     <div class="modal" id="authModal">
         <div class="modal-content">
-            <h2 id="modalTitle">تسجيل الدخول</h2>
-            <input type="email" id="email" placeholder="البريد الإلكتروني">
-            <input type="password" id="password" placeholder="كلمة السر">
-            <button class="btn btn-primary" id="loginBtn" onclick="loginUser()">دخول</button>
-            <button class="btn btn-secondary" id="signupBtn" onclick="signupUser()">إنشاء حساب جديد</button>
-            <button class="btn btn-secondary" onclick="closeAuthModal()" style="opacity: 0.5;">إلغاء</button>
+            <h2 style="text-align:center; margin-bottom: 20px;">Access Account</h2>
+            <input type="email" id="email" placeholder="Email Address">
+            <input type="password" id="password" placeholder="Password">
+            <button class="btn btn-main" id="authSubmit" onclick="handleAuth()">CONTINUE</button>
+            <p style="text-align:center; font-size: 13px; color:var(--gray); cursor:pointer;" onclick="toggleAuthMode()" id="switchBtn">Don't have an account? Sign Up</p>
+            <button class="btn" style="background:none; color:#555;" onclick="toggleModal(false)">Cancel</button>
         </div>
     </div>
 
@@ -157,145 +146,148 @@
 
     <script>
         const firebaseConfig = {
-          apiKey: "AIzaSyC8tq5Ry9yVhcKbumQlbU4NE4JLHd-RRgE",
-          authDomain: "cashreel-f8198.firebaseapp.com",
-          projectId: "cashreel-f8198",
-          storageBucket: "cashreel-f8198.firebasestorage.app",
-          messagingSenderId: "969237019203",
-          appId: "1:969237019203:web:6e1c4124969d4f6f7c32f6"
+            apiKey: "AIzaSyC8tq5Ry9yVhcKbumQlbU4NE4JLHd-RRgE",
+            authDomain: "cashreel-f8198.firebaseapp.com",
+            projectId: "cashreel-f8198",
+            storageBucket: "cashreel-f8198.firebasestorage.app",
+            messagingSenderId: "969237019203",
+            appId: "1:969237019203:web:6e1c4124969d4f6f7c32f6"
         };
-
         firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
         const db = firebase.firestore();
-        
-        // حط الرابط الجديد من AdsTerra هنا
-        const AD_LINK = "https://www.profitablecpmratenework.com/wyqf720j2p?key=e32d605e8d90f2fdb51e61e579728396";
+
+        // ⚠️ REPLACE THIS LINK WITH YOUR NEW ADSTERRA DIRECT LINK
+        const SMART_LINK = "https://www.profitablecpmratenework.com/wyqf720j2p?key=e32d605e8d90f2fdb51e61e579728396";
 
         let currentUser = null;
         let userData = null;
+        let isLogin = true;
 
-        auth.onAuthStateChanged(async (user) => {
+        auth.onAuthStateChanged(async user => {
             if (user) {
                 currentUser = user;
-                await loadUserData(user.uid);
-                toggleUI(true);
+                await syncData();
+                showSection('dashboard');
             } else {
-                toggleUI(false);
+                showSection('welcome');
             }
         });
 
-        async function loadUserData(uid) {
-            try {
-                const doc = await db.collection('users').doc(uid).get();
-                if (doc.exists) {
-                    userData = doc.data();
-                } else {
-                    userData = { balance: 0, totalAds: 0, level: 1, email: currentUser.email, refCode: uid.substring(0,6).toUpperCase() };
-                    await db.collection('users').doc(uid).set(userData);
-                }
-                updateDashboardUI();
-            } catch (e) { console.error("Error", e); }
+        async function syncData() {
+            const doc = await db.collection('users').doc(currentUser.uid).get();
+            if (doc.exists) {
+                userData = doc.data();
+            } else {
+                userData = { balance: 0, totalAds: 0, level: 1, refCode: currentUser.uid.substring(0,6).toUpperCase() };
+                await db.collection('users').doc(currentUser.uid).set(userData);
+            }
+            updateUI();
         }
 
-        function updateDashboardUI() {
-            document.getElementById('userBalance').innerText = userData.balance.toFixed(3) + '$';
+        function updateUI() {
+            document.getElementById('userBalance').innerText = userData.balance.toFixed(3);
             document.getElementById('totalAds').innerText = userData.totalAds;
             document.getElementById('userLevel').innerText = userData.level;
-            document.getElementById('refCode').innerText = userData.refCode;
+            document.getElementById('myRefCode').innerText = userData.refCode;
+        }
+
+        async function handleAuth() {
+            const e = document.getElementById('email').value;
+            const p = document.getElementById('password').value;
+            if(!e || !p) return alert("Fill fields");
             
-            const wBtn = document.getElementById('withdrawBtn');
-            if(userData.balance >= 10) { wBtn.disabled = false; wBtn.classList.add('active'); }
+            const btn = document.getElementById('authSubmit');
+            btn.innerText = "Connecting..."; btn.disabled = true;
+
+            try {
+                if(isLogin) {
+                    await auth.signInWithEmailAndPassword(e, p);
+                } else {
+                    await auth.createUserWithEmailAndPassword(e, p);
+                }
+                toggleModal(false);
+            } catch (err) {
+                alert(err.message);
+                btn.innerText = "CONTINUE"; btn.disabled = false;
+            }
         }
 
-        function toggleUI(loggedIn) {
-            document.getElementById('homePage').style.display = loggedIn ? 'none' : 'block';
-            document.getElementById('dashboard').style.display = loggedIn ? 'block' : 'none';
-            document.getElementById('balanceDiv').style.display = loggedIn ? 'flex' : 'none';
-            document.getElementById('logoutBtn').style.display = loggedIn ? 'block' : 'none';
-            document.getElementById('authModal').style.display = 'none';
-        }
+        function handleWatchAd() {
+            // Open Adsterra Smart Link
+            window.open(SMART_LINK, '_blank');
 
-        function openAuthModal() { document.getElementById('authModal').style.display = 'flex'; }
-        function closeAuthModal() { document.getElementById('authModal').style.display = 'none'; }
+            const btn = document.getElementById('watchBtn');
+            const player = document.getElementById('adPlayer');
+            btn.style.display = 'none';
+            player.style.display = 'flex';
 
-        async function loginUser() {
-            const e = document.getElementById('email').value;
-            const p = document.getElementById('password').value;
-            const btn = document.getElementById('loginBtn');
-            if(!e || !p) return alert("المرجو إدخال جميع البيانات");
-            btn.innerText = "جاري الاتصال..."; btn.disabled = true;
-            try { await auth.signInWithEmailAndPassword(e, p); } 
-            catch(err) { alert("خطأ: " + err.message); btn.innerText = "دخول"; btn.disabled = false; }
-        }
-
-        async function signupUser() {
-            const e = document.getElementById('email').value;
-            const p = document.getElementById('password').value;
-            const btn = document.getElementById('signupBtn');
-            if(!e || !p) return alert("المرجو إدخال جميع البيانات");
-            btn.innerText = "جاري الإنشاء..."; btn.disabled = true;
-            try { await auth.createUserWithEmailAndPassword(e, p); } 
-            catch(err) { alert("خطأ: " + err.message); btn.innerText = "إنشاء حساب جديد"; btn.disabled = false; }
-        }
-
-        function logoutUser() { auth.signOut(); }
-
-        function watchVideo() {
-            window.open(AD_LINK, '_blank');
-            const btn = document.getElementById('watchAdBtn');
-            btn.disabled = true;
-            document.getElementById('adPlayer').style.display = 'flex';
-            let s = 15;
+            let sec = 15;
             const timer = setInterval(() => {
-                s--;
-                document.getElementById('adTimer').innerText = s;
-                if(s <= 0) { clearInterval(timer); finishAd(); }
+                sec--;
+                document.getElementById('countDown').innerText = sec;
+                if(sec <= 0) {
+                    clearInterval(timer);
+                    addReward();
+                }
             }, 1000);
         }
 
-        async function finishAd() {
-            document.getElementById('adPlayer').style.display = 'none';
-            const newBal = (userData.balance || 0) + 0.003;
-            const newTotal = (userData.totalAds || 0) + 1;
+        async function addReward() {
+            const newBal = userData.balance + 0.003;
+            const newTotal = userData.totalAds + 1;
             const newLevel = Math.floor(newTotal / 100) + 1;
-            
-            await db.collection('users').doc(currentUser.uid).update({ 
-                balance: newBal, 
+
+            await db.collection('users').doc(currentUser.uid).update({
+                balance: newBal,
                 totalAds: newTotal,
                 level: newLevel
             });
-            
+
             userData.balance = newBal;
             userData.totalAds = newTotal;
             userData.level = newLevel;
-            updateDashboardUI();
+            updateUI();
+
+            document.getElementById('adPlayer').style.display = 'none';
+            document.getElementById('watchBtn').style.display = 'flex';
+            document.getElementById('countDown').innerText = "15";
             
-            document.getElementById('message').style.display = 'block';
-            setTimeout(() => document.getElementById('message').style.display = 'none', 3000);
-            document.getElementById('watchAdBtn').disabled = false;
+            const msg = document.getElementById('rewardMsg');
+            msg.style.display = 'block';
+            setTimeout(() => msg.style.display = 'none', 3000);
         }
 
-        function showDashboard() { 
-            document.getElementById('dashboard').style.display='block'; 
-            document.getElementById('leaderboardPage').style.display='none'; 
-            document.getElementById('referralPage').style.display='none'; 
+        function showSection(id) {
+            document.getElementById('welcomeScreen').style.display = id === 'welcome' ? 'block' : 'none';
+            document.getElementById('dashboard').style.display = id === 'dashboard' ? 'block' : 'none';
+            document.getElementById('leaderboard').style.display = id === 'leaderboard' ? 'block' : 'none';
+            document.getElementById('referral').style.display = id === 'referral' ? 'block' : 'none';
+            document.getElementById('balanceDisplay').style.display = id !== 'welcome' ? 'flex' : 'none';
+            
+            if(id === 'leaderboard') loadLeaderboard();
         }
-        async function showLeaderboard() {
-            document.getElementById('dashboard').style.display='none';
-            document.getElementById('leaderboardPage').style.display='block';
-            const list = document.getElementById('leaderboardList');
-            list.innerHTML = 'جاري التحميل...';
+
+        async function loadLeaderboard() {
+            const list = document.getElementById('leaderList');
+            list.innerHTML = 'Loading...';
             const snap = await db.collection('users').orderBy('balance', 'desc').limit(5).get();
             list.innerHTML = '';
             snap.forEach(doc => {
                 const d = doc.data();
-                list.innerHTML += `<div class="leader-item"><span>${d.email ? d.email.split('@')[0] : 'مستخدم'}</span><strong>${(d.balance || 0).toFixed(3)}$</strong></div>`;
+                list.innerHTML += `<div class="list-item"><span>User ${d.refCode}</span><b>${d.balance.toFixed(3)}$</b></div>`;
             });
         }
-        function showReferral() { document.getElementById('dashboard').style.display='none'; document.getElementById('referralPage').style.display='block'; }
-        function copyRefCode() { navigator.clipboard.writeText(userData.refCode); alert("تم نسخ الكود بنجاح!"); }
-        function requestWithdraw() { alert("تم إرسال الطلب! الحد الأدنى للسحب هو 10$."); }
+
+        function toggleAuthMode() {
+            isLogin = !isLogin;
+            document.getElementById('switchBtn').innerText = isLogin ? "Don't have an account? Sign Up" : "Have an account? Login";
+            document.getElementById('authSubmit').innerText = isLogin ? "LOGIN" : "CREATE ACCOUNT";
+        }
+
+        function toggleModal(show) { document.getElementById('authModal').style.display = show ? 'flex' : 'none'; }
+        function logout() { auth.signOut(); }
+        function copyRef() { navigator.clipboard.writeText(userData.refCode); alert("Copied!"); }
     </script>
 </body>
 </html>
