@@ -18,176 +18,62 @@
             --yellow: #FFD700;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: 'Cairo', sans-serif;
-            background: var(--bg-dark);
-            color: var(--text-white);
-            min-height: 100vh;
-        }
+        body { font-family: 'Cairo', sans-serif; background: var(--bg-dark); color: var(--text-white); min-height: 100vh; }
         .container { max-width: 500px; margin: 0 auto; padding: 20px; }
-        .header {
-            display: flex; justify-content: space-between; align-items: center;
-            padding: 15px 0; border-bottom: 1px solid #333; margin-bottom: 20px;
-        }
+        .header { display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-bottom: 1px solid #333; margin-bottom: 20px; }
         .logo { font-size: 24px; font-weight: 900; color: var(--pink); }
-        #userEmail { font-size: 12px; color: var(--text-gray); }
-        .balance {
-            display: flex; align-items: center; gap: 8px;
-            background: var(--card-dark); padding: 8px 15px;
-            border-radius: 20px; border: 1px solid var(--cyan);
-        }
+        .balance { display: flex; align-items: center; gap: 8px; background: var(--card-dark); padding: 8px 15px; border-radius: 20px; border: 1px solid var(--cyan); }
         #userBalance { font-size: 18px; font-weight: 700; color: var(--cyan); }
-        .level-badge {
-            background: var(--yellow); color: #000; padding: 2px 8px;
-            border-radius: 10px; font-size: 11px; font-weight: 700;
-        }
-        .logout-btn {
-            background: #333; color: var(--text-white); border: none;
-            padding: 8px 15px; border-radius: 8px; cursor: pointer;
-        }
+        .logout-btn { background: #333; color: var(--text-white); border: none; padding: 8px 15px; border-radius: 8px; cursor: pointer; }
         .main { text-align: center; padding: 20px 0; }
-        .main h1 { font-size: 28px; margin-bottom: 15px; line-height: 1.4; }
-        .main h1 span { color: var(--pink); }
-        .main p { color: var(--text-gray); margin-bottom: 25px; }
-        .btn {
-            width: 100%; padding: 15px; border: none; border-radius: 12px;
-            font-size: 16px; font-weight: 700; cursor: pointer; margin: 8px 0;
-            transition: all 0.3s;
-        }
+        .btn { width: 100%; padding: 15px; border: none; border-radius: 12px; font-size: 16px; font-weight: 700; cursor: pointer; margin: 8px 0; transition: all 0.3s; }
         .btn-primary { background: var(--pink); color: white; }
-        .btn-primary:disabled { background: #555; cursor: not-allowed; }
-        .btn-withdraw { background: #555; color: #999; }
-        .btn-withdraw.active { background: var(--green); color: white; }
         .btn-secondary { background: var(--card-dark); color: var(--text-white); }
-        .ad-player {
-            background: #000; border-radius: 15px; height: 400px;
-            display: flex; align-items: center; justify-content: center;
-            margin: 20px 0; position: relative; overflow: hidden;
-        }
-        .ad-player video { width: 100%; height: 100%; object-fit: cover; }
-        .ad-overlay {
-            position: absolute; bottom: 0; left: 0; right: 0;
-            background: linear-gradient(transparent, rgba(0,0,0,0.8));
-            padding: 20px; text-align: left;
-        }
-        .timer { 
-            position: absolute; top: 15px; right: 15px; 
-            background: rgba(0,0,0,0.7); padding: 5px 12px; 
-            border-radius: 20px; font-weight: 700; color: var(--yellow);
-        }
-        .sponsored { color: var(--text-gray); font-size: 12px; }
-        .modal {
-            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.9); justify-content: center; align-items: center; z-index: 1000;
-        }
-        .modal-content {
-            background: var(--card-dark); padding: 30px; border-radius: 15px;
-            width: 90%; max-width: 400px;
-        }
-        .modal-content h2 { margin-bottom: 20px; text-align: center; }
-        .modal-content input {
-            width: 100%; padding: 12px; margin: 8px 0; border-radius: 8px;
-            border: 1px solid #333; background: var(--bg-dark); color: white;
-        }
-        .stats-grid {
-            display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 20px 0;
-        }
-        .stat-card {
-            background: var(--card-dark); padding: 15px; border-radius: 12px; text-align: center;
-        }
-        .stat-card .value { font-size: 20px; font-weight: 700; color: var(--cyan); }
-        .stat-card .label { font-size: 12px; color: var(--text-gray); }
-        .leaderboard { margin-top: 20px; }
-        .leader-item {
-            display: flex; justify-content: space-between; padding: 10px;
-            background: var(--card-dark); margin: 5px 0; border-radius: 8px;
-        }
-        .message {
-            text-align: center; color: var(--green); font-weight: 700;
-            margin: 10px 0; display: none;
-        }
+        .ad-player { background: #000; border-radius: 15px; height: 350px; display: flex; align-items: center; justify-content: center; margin: 20px 0; position: relative; overflow: hidden; border: 2px solid #333; }
+        .timer { position: absolute; top: 15px; right: 15px; background: rgba(0,0,0,0.8); padding: 5px 15px; border-radius: 20px; color: var(--yellow); font-weight: bold; }
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); justify-content: center; align-items: center; z-index: 1000; }
+        .modal-content { background: var(--card-dark); padding: 30px; border-radius: 15px; width: 90%; max-width: 400px; }
+        .modal-content input { width: 100%; padding: 12px; margin: 8px 0; border-radius: 8px; border: 1px solid #333; background: var(--bg-dark); color: white; }
+        .message { text-align: center; color: var(--green); font-weight: 700; margin: 10px 0; display: none; }
     </style>
-    
     <script src="https://pl29085009.profitablecpmratenework.com/f1/b5/64/f1b564b85d4f11bc10413d8c7c15e0c7.js"></script>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <div>
-                <div class="logo">CashReel</div>
-                <div id="userEmail"></div>
-            </div>
-            <div id="authSection" style="display: flex; align-items: center; gap: 10px;">
+            <div class="logo">CashReel</div>
+            <div id="authSection" style="display: flex; gap: 10px; align-items: center;">
                 <div class="balance" id="balanceDiv" style="display:none;">
                     <span id="userBalance">0.000$</span>
-                    <span id="levelBadge" class="level-badge">LVL 1</span>
                 </div>
                 <button class="logout-btn" id="logoutBtn" onclick="logoutUser()" style="display:none;">Logout</button>
-                <button class="btn-primary" id="mainLoginBtn" onclick="openAuthModal()" style="padding: 8px 15px; border-radius: 8px; border:none; font-weight:700;">Login</button>
             </div>
         </div>
 
-        <div class="main" id="homePage">
-            <h1>Earn <span>Unlimited Cash</span><br>by watching videos</h1>
-            <p>Watch short videos and get $0.003 for each!</p>
-            <button class="btn btn-primary" onclick="openAuthModal()">Get Started Now</button>
+        <div id="homePage" class="main">
+            <h1>Earn <span>Cash</span> by<br>Watching Videos</h1>
+            <p>Get paid for every ad you watch!</p>
+            <button class="btn btn-primary" onclick="openAuthModal()">Login / Join Now</button>
         </div>
 
-        <div class="main" id="dashboard" style="display:none;">
-            <h1>Welcome to CashReel 💰</h1>
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="value" id="totalAds">0</div>
-                    <div class="label">Ads Viewed</div>
-                </div>
-                <div class="stat-card">
-                    <div class="value" id="userLevel">1</div>
-                    <div class="label">Level</div>
-                </div>
-            </div>
-
+        <div id="dashboard" class="main" style="display:none;">
             <div class="ad-player" id="adPlayer" style="display:none;">
                 <div class="timer" id="adTimer">15</div>
-                <video id="adVideo" muted loop>
-                    <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
-                </video>
-                <div class="ad-overlay">
-                    <div class="sponsored">Sponsored • AdsTerra</div>
-                    <div>Demo Ad</div>
-                </div>
+                <p>Wait for the ad to finish...</p>
             </div>
-
-            <button class="btn btn-primary" id="watchAdBtn" onclick="watchVideo()">Watch Ad & Earn</button>
-            <button class="btn btn-withdraw" id="withdrawBtn" onclick="requestWithdraw()" disabled>Withdraw ($10 Min)</button>
-            <button class="btn btn-secondary" onclick="showLeaderboard()">🏆 Leaderboard</button>
-            <button class="btn btn-secondary" onclick="showReferral()">👥 Invite Friends</button>
-            
-            <div class="message" id="message">Success! +$0.003 Added ✅</div>
-        </div>
-
-        <div class="main" id="leaderboardPage" style="display:none;">
-            <h1>🏆 Leaderboard</h1>
-            <div id="leaderboardList"></div>
-            <button class="btn btn-secondary" onclick="showDashboard()">Back</button>
-        </div>
-
-        <div class="main" id="referralPage" style="display:none;">
-            <h1>👥 Referral Program</h1>
-            <p>Your Code:</p>
-            <div class="stat-card" style="margin: 15px 0;"><div class="value" id="refCode">...</div></div>
-            <button class="btn btn-primary" onclick="copyRefCode()">Copy Code</button>
-            <button class="btn btn-secondary" onclick="showDashboard()">Back</button>
+            <button class="btn btn-primary" id="watchAdBtn" onclick="watchVideo()">Watch Ad & Earn $0.003</button>
+            <div class="message" id="message">Success! Rewards Added ✅</div>
         </div>
     </div>
 
     <div class="modal" id="authModal">
         <div class="modal-content">
-            <h2 id="modalTitle">Login / Sign Up</h2>
-            <input type="email" id="email" placeholder="Email Address">
-            <input type="password" id="password" placeholder="Password">
-            <button class="btn btn-primary" id="loginSubmitBtn" onclick="loginUser()">Login</button>
-            <button class="btn btn-secondary" id="signupSubmitBtn" onclick="signupUser()">Create Account</button>
-            <button class="btn btn-secondary" onclick="closeAuthModal()">Cancel</button>
+            <h2 id="modalTitle">Welcome</h2>
+            <input type="email" id="email" placeholder="Enter your Email">
+            <input type="password" id="password" placeholder="Enter Password">
+            <button class="btn btn-primary" id="loginBtn" onclick="loginUser()">Login</button>
+            <button class="btn btn-secondary" id="signupBtn" onclick="signupUser()">Create New Account</button>
+            <button class="btn btn-secondary" onclick="closeAuthModal()" style="opacity: 0.6;">Cancel</button>
         </div>
     </div>
 
@@ -196,11 +82,6 @@
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
 
     <script>
-        const CONFIG = { ADMIN_EMAIL: "zakaria20.elachkar@gmail.com", MIN_WITHDRAW: 10.00, AD_REWARD: 0.003, AD_DURATION: 15, LEVEL_UP_ADS: 100 };
-        
-        // ✅ Your Ad link
-        const SMARTLINK_URL = "https://www.profitablecpmratenework.com/wyqf720j2p?key=e32d605e8d90f2fdb51e61e579728396";
-        
         const firebaseConfig = {
           apiKey: "AIzaSyC8tq5Ry9yVhcKbumQlbU4NE4JLHd-RRgE",
           authDomain: "cashreel-f8198.firebaseapp.com",
@@ -213,123 +94,99 @@
         firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
         const db = firebase.firestore();
-        auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
+        const SMARTLINK = "https://www.profitablecpmratenework.com/wyqf720j2p?key=e32d605e8d90f2fdb51e61e579728396";
 
-        let currentUser = null; let userData = null;
+        let currentUser = null;
+        let userData = null;
 
-        // Auth Observer
         auth.onAuthStateChanged(async (user) => {
-            const mainLoginBtn = document.getElementById('mainLoginBtn');
-            const logoutBtn = document.getElementById('logoutBtn');
-            const balanceDiv = document.getElementById('balanceDiv');
-            const authModal = document.getElementById('authModal');
-
             if (user) {
                 currentUser = user;
                 await loadUserData(user.uid);
-                mainLoginBtn.style.display = 'none';
-                logoutBtn.style.display = 'block';
-                balanceDiv.style.display = 'flex';
-                authModal.style.display = 'none';
-                showDashboard();
+                toggleUI(true);
             } else {
-                currentUser = null;
-                userData = null;
-                mainLoginBtn.style.display = 'block';
-                logoutBtn.style.display = 'none';
-                balanceDiv.style.display = 'none';
-                showHomePage();
+                toggleUI(false);
             }
         });
 
         async function loadUserData(uid) {
             const doc = await db.collection('users').doc(uid).get();
-            if (doc.exists) { userData = doc.data(); } 
-            else {
-                userData = { email: currentUser.email, balance: 0, totalAds: 0, level: 1, refCode: uid.substring(0, 6).toUpperCase() };
+            if (doc.exists) {
+                userData = doc.data();
+            } else {
+                userData = { balance: 0, email: currentUser.email };
                 await db.collection('users').doc(uid).set(userData);
             }
-            updateUI();
-        }
-
-        function updateUI() {
-            if (!userData) return;
             document.getElementById('userBalance').innerText = userData.balance.toFixed(3) + '$';
-            document.getElementById('userEmail').innerText = userData.email;
-            document.getElementById('totalAds').innerText = userData.totalAds;
-            document.getElementById('userLevel').innerText = userData.level;
-            document.getElementById('levelBadge').innerText = `LVL ${userData.level}`;
-            document.getElementById('refCode').innerText = userData.refCode;
-            const wb = document.getElementById('withdrawBtn');
-            wb.disabled = userData.balance < CONFIG.MIN_WITHDRAW;
-            if(!wb.disabled) wb.classList.add('active');
         }
 
-        // Navigation
-        function showHomePage() { document.getElementById('homePage').style.display='block'; document.getElementById('dashboard').style.display='none'; }
-        function showDashboard() { document.getElementById('homePage').style.display='none'; document.getElementById('dashboard').style.display='block'; document.getElementById('leaderboardPage').style.display='none'; document.getElementById('referralPage').style.display='none'; }
-        function showLeaderboard() { document.getElementById('dashboard').style.display='none'; document.getElementById('leaderboardPage').style.display='block'; loadLeaderboard(); }
-        function showReferral() { document.getElementById('dashboard').style.display='none'; document.getElementById('referralPage').style.display='block'; }
-        function openAuthModal() { document.getElementById('authModal').style.display='flex'; }
-        function closeAuthModal() { document.getElementById('authModal').style.display='none'; }
+        function toggleUI(isLoggedIn) {
+            document.getElementById('homePage').style.display = isLoggedIn ? 'none' : 'block';
+            document.getElementById('dashboard').style.display = isLoggedIn ? 'block' : 'none';
+            document.getElementById('balanceDiv').style.display = isLoggedIn ? 'flex' : 'none';
+            document.getElementById('logoutBtn').style.display = isLoggedIn ? 'block' : 'none';
+            document.getElementById('authModal').style.display = 'none';
+        }
 
-        // Login Logic
+        function openAuthModal() { document.getElementById('authModal').style.display = 'flex'; }
+        function closeAuthModal() { document.getElementById('authModal').style.display = 'none'; }
+
         async function loginUser() {
-            const e = document.getElementById('email').value; const p = document.getElementById('password').value;
-            const btn = document.getElementById('loginSubmitBtn');
-            if(!e || !p) return alert("Please fill all fields");
-            btn.disabled = true; btn.innerText = "Verifying...";
-            try { await auth.signInWithEmailAndPassword(e, p); } 
-            catch(err) { alert("Login failed: Invalid email or password"); btn.disabled = false; btn.innerText = "Login"; }
+            const e = document.getElementById('email').value;
+            const p = document.getElementById('password').value;
+            const btn = document.getElementById('loginBtn');
+            if(!e || !p) return alert("Fill all fields");
+            btn.innerText = "Connecting..."; btn.disabled = true;
+            try {
+                await auth.signInWithEmailAndPassword(e, p);
+            } catch(err) {
+                alert("Error: " + err.message);
+                btn.innerText = "Login"; btn.disabled = false;
+            }
         }
 
         async function signupUser() {
-            const e = document.getElementById('email').value; const p = document.getElementById('password').value;
-            const btn = document.getElementById('signupSubmitBtn');
-            if(!e || !p) return alert("Please fill all fields");
-            btn.disabled = true; btn.innerText = "Creating Account...";
-            try { await auth.createUserWithEmailAndPassword(e, p); } 
-            catch(err) { alert("Signup failed: Email might be already in use"); btn.disabled = false; btn.innerText = "Create Account"; }
+            const e = document.getElementById('email').value;
+            const p = document.getElementById('password').value;
+            const btn = document.getElementById('signupBtn');
+            if(!e || !p) return alert("Fill all fields");
+            btn.innerText = "Creating..."; btn.disabled = true;
+            try {
+                await auth.createUserWithEmailAndPassword(e, p);
+            } catch(err) {
+                alert("Error: " + err.message);
+                btn.innerText = "Create New Account"; btn.disabled = false;
+            }
         }
 
         function logoutUser() { auth.signOut(); }
 
-        // Ad Logic
-        async function watchVideo() {
-            window.open(SMARTLINK_URL, '_blank');
+        function watchVideo() {
+            window.open(SMARTLINK, '_blank');
             const btn = document.getElementById('watchAdBtn');
             btn.disabled = true;
             document.getElementById('adPlayer').style.display = 'flex';
-            document.getElementById('adVideo').play();
-            let s = CONFIG.AD_DURATION;
+            let s = 15;
             const timer = setInterval(() => {
-                s--; document.getElementById('adTimer').innerText = s;
-                if(s <= 0) { clearInterval(timer); finishAd(); }
+                s--;
+                document.getElementById('adTimer').innerText = s;
+                if(s <= 0) {
+                    clearInterval(timer);
+                    finishAd();
+                }
             }, 1000);
         }
 
         async function finishAd() {
             document.getElementById('adPlayer').style.display = 'none';
-            const userRef = db.collection('users').doc(currentUser.uid);
-            const reward = CONFIG.AD_REWARD;
-            const newBal = userData.balance + reward;
-            const newAds = userData.totalAds + 1;
-            await userRef.update({ balance: newBal, totalAds: newAds });
-            userData.balance = newBal; userData.totalAds = newAds;
-            updateUI();
-            document.getElementById('message').style.display='block';
-            setTimeout(()=> document.getElementById('message').style.display='none', 2000);
+            const newBalance = userData.balance + 0.003;
+            await db.collection('users').doc(currentUser.uid).update({ balance: newBalance });
+            userData.balance = newBalance;
+            document.getElementById('userBalance').innerText = newBalance.toFixed(3) + '$';
+            document.getElementById('message').style.display = 'block';
+            setTimeout(() => document.getElementById('message').style.display = 'none', 3000);
             document.getElementById('watchAdBtn').disabled = false;
         }
-
-        function requestWithdraw() { alert("Withdrawal request sent for review!"); }
-        async function loadLeaderboard() {
-            const list = document.getElementById('leaderboardList');
-            const snap = await db.collection('users').orderBy('balance', 'desc').limit(5).get();
-            list.innerHTML = '';
-            snap.forEach(doc => { const d = doc.data(); list.innerHTML += `<div class="leader-item"><span>${d.email.split('@')[0]}</span><span>${d.balance.toFixed(3)}$</span></div>`; });
-        }
-        function copyRefCode() { navigator.clipboard.writeText(userData.refCode); alert("Code Copied!"); }
     </script>
 </body>
 </html>
