@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CashReel - اربح من مشاهدة الفيديو</title>
+    <title>CashReel - Watch & Earn</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -68,7 +68,7 @@
         .ad-overlay {
             position: absolute; bottom: 0; left: 0; right: 0;
             background: linear-gradient(transparent, rgba(0,0,0,0.8));
-            padding: 20px; text-align: right;
+            padding: 20px; text-align: left;
         }
         .timer { 
             position: absolute; top: 15px; right: 15px; 
@@ -122,28 +122,30 @@
                     <span id="userBalance">0.000$</span>
                     <span id="levelBadge" class="level-badge">LVL 1</span>
                 </div>
-                <button class="logout-btn" id="logoutBtn" onclick="logoutUser()" style="display:none;">خروج</button>
+                <button class="logout-btn" id="logoutBtn" onclick="logoutUser()" style="display:none;">Logout</button>
+                <button class="btn-primary" id="mainLoginBtn" onclick="openAuthModal()" style="padding: 8px 15px; border-radius: 8px; border:none; font-weight:700;">Login</button>
             </div>
         </div>
 
         <div class="main" id="homePage">
-            <h1>اربح <span>فلوس بلا حدود</span><br>من مشاهدة الفيديو</h1>
-            <p>شاهد فيديوهات بلا حدود، كل فيديو كيعطيك $0.003</p>
-            <button class="btn btn-primary" onclick="openAuthModal()">بدا الربح دابا</button>
+            <h1>Earn <span>Unlimited Cash</span><br>by watching videos</h1>
+            <p>Watch short videos and get $0.003 for each!</p>
+            <button class="btn btn-primary" onclick="openAuthModal()">Get Started Now</button>
         </div>
 
         <div class="main" id="dashboard" style="display:none;">
-            <h1>أهلاً بك في CashReel 💰</h1>
+            <h1>Welcome to CashReel 💰</h1>
             <div class="stats-grid">
                 <div class="stat-card">
                     <div class="value" id="totalAds">0</div>
-                    <div class="label">إعلانات مشاهدة</div>
+                    <div class="label">Ads Viewed</div>
                 </div>
                 <div class="stat-card">
                     <div class="value" id="userLevel">1</div>
-                    <div class="label">المستوى</div>
+                    <div class="label">Level</div>
                 </div>
             </div>
+
             <div class="ad-player" id="adPlayer" style="display:none;">
                 <div class="timer" id="adTimer">15</div>
                 <video id="adVideo" muted loop>
@@ -151,39 +153,41 @@
                 </video>
                 <div class="ad-overlay">
                     <div class="sponsored">Sponsored • AdsTerra</div>
-                    <div>إعلان تجريبي</div>
+                    <div>Demo Ad</div>
                 </div>
             </div>
-            <button class="btn btn-primary" id="watchAdBtn" onclick="watchVideo()">شاهد الإعلان واربح الآن</button>
-            <button class="btn btn-withdraw" id="withdrawBtn" onclick="requestWithdraw()" disabled>السحب (10$ الحد الأدنى)</button>
-            <button class="btn btn-secondary" onclick="showLeaderboard()">🏆 لوحة الصدارة</button>
-            <button class="btn btn-secondary" onclick="showReferral()">👥 دعوة الأصدقاء</button>
-            <div class="message" id="message">مبروك! تمت إضافة الربح ✅</div>
+
+            <button class="btn btn-primary" id="watchAdBtn" onclick="watchVideo()">Watch Ad & Earn</button>
+            <button class="btn btn-withdraw" id="withdrawBtn" onclick="requestWithdraw()" disabled>Withdraw ($10 Min)</button>
+            <button class="btn btn-secondary" onclick="showLeaderboard()">🏆 Leaderboard</button>
+            <button class="btn btn-secondary" onclick="showReferral()">👥 Invite Friends</button>
+            
+            <div class="message" id="message">Success! +$0.003 Added ✅</div>
         </div>
 
         <div class="main" id="leaderboardPage" style="display:none;">
-            <h1>🏆 لوحة الصدارة</h1>
+            <h1>🏆 Leaderboard</h1>
             <div id="leaderboardList"></div>
-            <button class="btn btn-secondary" onclick="showDashboard()">رجوع</button>
+            <button class="btn btn-secondary" onclick="showDashboard()">Back</button>
         </div>
 
         <div class="main" id="referralPage" style="display:none;">
-            <h1>👥 دعوة الأصدقاء</h1>
-            <p>الكود ديالك:</p>
-            <div class="stat-card" style="margin: 15px 0;"><div class="value" id="refCode" style="font-size: 16px;">...</div></div>
-            <button class="btn btn-primary" onclick="copyRefCode()">نسخ الكود</button>
-            <button class="btn btn-secondary" onclick="showDashboard()">رجوع</button>
+            <h1>👥 Referral Program</h1>
+            <p>Your Code:</p>
+            <div class="stat-card" style="margin: 15px 0;"><div class="value" id="refCode">...</div></div>
+            <button class="btn btn-primary" onclick="copyRefCode()">Copy Code</button>
+            <button class="btn btn-secondary" onclick="showDashboard()">Back</button>
         </div>
     </div>
 
     <div class="modal" id="authModal">
         <div class="modal-content">
-            <h2 id="modalTitle">تسجيل الدخول / حساب جديد</h2>
-            <input type="email" id="email" placeholder="الإيميل">
-            <input type="password" id="password" placeholder="كلمة السر">
-            <button class="btn btn-primary" id="loginBtn" onclick="loginUser()">دخول</button>
-            <button class="btn btn-secondary" id="signupBtn" onclick="signupUser()">إنشاء حساب جديد</button>
-            <button class="btn btn-secondary" onclick="closeAuthModal()">إلغاء</button>
+            <h2 id="modalTitle">Login / Sign Up</h2>
+            <input type="email" id="email" placeholder="Email Address">
+            <input type="password" id="password" placeholder="Password">
+            <button class="btn btn-primary" id="loginSubmitBtn" onclick="loginUser()">Login</button>
+            <button class="btn btn-secondary" id="signupSubmitBtn" onclick="signupUser()">Create Account</button>
+            <button class="btn btn-secondary" onclick="closeAuthModal()">Cancel</button>
         </div>
     </div>
 
@@ -193,6 +197,8 @@
 
     <script>
         const CONFIG = { ADMIN_EMAIL: "zakaria20.elachkar@gmail.com", MIN_WITHDRAW: 10.00, AD_REWARD: 0.003, AD_DURATION: 15, LEVEL_UP_ADS: 100 };
+        
+        // ✅ Your Ad link
         const SMARTLINK_URL = "https://www.profitablecpmratenework.com/wyqf720j2p?key=e32d605e8d90f2fdb51e61e579728396";
         
         const firebaseConfig = {
@@ -211,9 +217,29 @@
 
         let currentUser = null; let userData = null;
 
+        // Auth Observer
         auth.onAuthStateChanged(async (user) => {
-            if (user) { currentUser = user; await loadUserData(user.uid); showDashboard(); } 
-            else { showHomePage(); }
+            const mainLoginBtn = document.getElementById('mainLoginBtn');
+            const logoutBtn = document.getElementById('logoutBtn');
+            const balanceDiv = document.getElementById('balanceDiv');
+            const authModal = document.getElementById('authModal');
+
+            if (user) {
+                currentUser = user;
+                await loadUserData(user.uid);
+                mainLoginBtn.style.display = 'none';
+                logoutBtn.style.display = 'block';
+                balanceDiv.style.display = 'flex';
+                authModal.style.display = 'none';
+                showDashboard();
+            } else {
+                currentUser = null;
+                userData = null;
+                mainLoginBtn.style.display = 'block';
+                logoutBtn.style.display = 'none';
+                balanceDiv.style.display = 'none';
+                showHomePage();
+            }
         });
 
         async function loadUserData(uid) {
@@ -239,40 +265,36 @@
             if(!wb.disabled) wb.classList.add('active');
         }
 
-        function showHomePage() { 
-            document.getElementById('homePage').style.display='block'; 
-            document.getElementById('dashboard').style.display='none';
-            document.getElementById('balanceDiv').style.display='none';
-            document.getElementById('logoutBtn').style.display='none';
-        }
-        function showDashboard() { 
-            document.getElementById('homePage').style.display='none'; 
-            document.getElementById('dashboard').style.display='block';
-            document.getElementById('leaderboardPage').style.display='none';
-            document.getElementById('referralPage').style.display='none';
-            document.getElementById('balanceDiv').style.display='flex';
-            document.getElementById('logoutBtn').style.display='block';
-            document.getElementById('authModal').style.display='none';
-        }
+        // Navigation
+        function showHomePage() { document.getElementById('homePage').style.display='block'; document.getElementById('dashboard').style.display='none'; }
+        function showDashboard() { document.getElementById('homePage').style.display='none'; document.getElementById('dashboard').style.display='block'; document.getElementById('leaderboardPage').style.display='none'; document.getElementById('referralPage').style.display='none'; }
         function showLeaderboard() { document.getElementById('dashboard').style.display='none'; document.getElementById('leaderboardPage').style.display='block'; loadLeaderboard(); }
         function showReferral() { document.getElementById('dashboard').style.display='none'; document.getElementById('referralPage').style.display='block'; }
         function openAuthModal() { document.getElementById('authModal').style.display='flex'; }
         function closeAuthModal() { document.getElementById('authModal').style.display='none'; }
 
-        // --- إصلاح نظام الدخول ---
+        // Login Logic
         async function loginUser() {
             const e = document.getElementById('email').value; const p = document.getElementById('password').value;
-            if(!e || !p) return alert("دخل المعلومات");
-            try { await auth.signInWithEmailAndPassword(e, p); } catch(err) { alert("خطأ: " + err.message); }
+            const btn = document.getElementById('loginSubmitBtn');
+            if(!e || !p) return alert("Please fill all fields");
+            btn.disabled = true; btn.innerText = "Verifying...";
+            try { await auth.signInWithEmailAndPassword(e, p); } 
+            catch(err) { alert("Login failed: Invalid email or password"); btn.disabled = false; btn.innerText = "Login"; }
         }
+
         async function signupUser() {
             const e = document.getElementById('email').value; const p = document.getElementById('password').value;
-            if(!e || !p) return alert("دخل المعلومات");
-            try { await auth.createUserWithEmailAndPassword(e, p); } catch(err) { alert("خطأ: " + err.message); }
+            const btn = document.getElementById('signupSubmitBtn');
+            if(!e || !p) return alert("Please fill all fields");
+            btn.disabled = true; btn.innerText = "Creating Account...";
+            try { await auth.createUserWithEmailAndPassword(e, p); } 
+            catch(err) { alert("Signup failed: Email might be already in use"); btn.disabled = false; btn.innerText = "Create Account"; }
         }
+
         function logoutUser() { auth.signOut(); }
 
-        // --- نظام الإعلانات والربح ---
+        // Ad Logic
         async function watchVideo() {
             window.open(SMARTLINK_URL, '_blank');
             const btn = document.getElementById('watchAdBtn');
@@ -300,21 +322,14 @@
             document.getElementById('watchAdBtn').disabled = false;
         }
 
-        async function requestWithdraw() {
-            alert("طلبك قيد المراجعة!");
-        }
-
+        function requestWithdraw() { alert("Withdrawal request sent for review!"); }
         async function loadLeaderboard() {
             const list = document.getElementById('leaderboardList');
-            list.innerHTML = 'جاري التحميل...';
             const snap = await db.collection('users').orderBy('balance', 'desc').limit(5).get();
             list.innerHTML = '';
-            snap.forEach(doc => {
-                const d = doc.data();
-                list.innerHTML += `<div class="leader-item"><span>${d.email}</span><span>${d.balance.toFixed(3)}$</span></div>`;
-            });
+            snap.forEach(doc => { const d = doc.data(); list.innerHTML += `<div class="leader-item"><span>${d.email.split('@')[0]}</span><span>${d.balance.toFixed(3)}$</span></div>`; });
         }
-        function copyRefCode() { navigator.clipboard.writeText(userData.refCode); alert("تم النسخ"); }
+        function copyRefCode() { navigator.clipboard.writeText(userData.refCode); alert("Code Copied!"); }
     </script>
 </body>
 </html>
