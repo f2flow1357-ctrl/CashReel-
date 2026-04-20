@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CashReel - Watch & Earn Unlimited</title>
+    <title>CashReel - شاهد واربح مبالغ حقيقية</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -21,14 +21,14 @@
         body { font-family: 'Cairo', sans-serif; background: var(--bg-dark); color: var(--text-white); min-height: 100vh; overflow-x: hidden; }
         .container { max-width: 500px; margin: 0 auto; padding: 20px; }
         
-        /* Header & Balance */
+        /* الهيدر والمحفظة */
         .header { display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-bottom: 1px solid #333; margin-bottom: 20px; }
         .logo { font-size: 26px; font-weight: 900; color: var(--pink); text-transform: uppercase; letter-spacing: 1px; }
         .balance { display: flex; align-items: center; gap: 8px; background: var(--card-dark); padding: 8px 15px; border-radius: 20px; border: 1px solid var(--cyan); }
         #userBalance { font-size: 18px; font-weight: 700; color: var(--cyan); }
         .logout-btn { background: #333; color: var(--text-white); border: none; padding: 8px 15px; border-radius: 8px; cursor: pointer; font-weight: 600; }
 
-        /* Main UI */
+        /* واجهة المستخدم الرئيسية */
         .main { text-align: center; padding: 20px 0; animation: fadeIn 0.5s ease; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         
@@ -43,26 +43,25 @@
         .btn-withdraw { background: #555; color: #999; cursor: not-allowed; }
         .btn-withdraw.active { background: var(--green); color: white; cursor: pointer; box-shadow: 0 4px 15px rgba(0, 200, 81, 0.3); }
 
-        /* Stats Grid */
+        /* شبكة الإحصائيات */
         .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 20px 0; }
         .stat-card { background: var(--card-dark); padding: 15px; border-radius: 15px; border: 1px solid #222; }
         .stat-card .value { font-size: 22px; font-weight: 800; color: var(--cyan); }
         .stat-card .label { font-size: 12px; color: var(--text-gray); text-transform: uppercase; margin-top: 5px; }
 
-        /* Ad Player Area */
-        .ad-container { background: #000; border-radius: 20px; height: 380px; display: flex; flex-direction: column; align-items: center; justify-content: center; margin: 20px 0; position: relative; overflow: hidden; border: 2px dashed #333; }
+        /* منطقة مشغل الإعلانات */
+        .ad-container { background: #000; border-radius: 20px; height: 300px; display: flex; flex-direction: column; align-items: center; justify-content: center; margin: 20px 0; position: relative; overflow: hidden; border: 2px dashed #333; }
         .timer-display { font-size: 50px; font-weight: 900; color: var(--yellow); text-shadow: 0 0 20px rgba(255, 215, 0, 0.5); }
         .ad-status { color: var(--text-gray); margin-top: 10px; font-weight: 600; }
 
-        /* Leaderboard */
-        .leader-item { display: flex; justify-content: space-between; align-items: center; padding: 12px 20px; background: var(--card-dark); margin: 8px 0; border-radius: 10px; border-right: 4px solid var(--pink); }
+        /* لوحة الصدارة */
+        .leader-item { display: flex; justify-content: space-between; align-items: center; padding: 12px 20px; background: var(--card-dark); margin: 8px 0; border-radius: 10px; border-left: 4px solid var(--pink); }
 
-        /* Modals */
+        /* النوافذ المنبثقة */
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); justify-content: center; align-items: center; z-index: 2000; backdrop-filter: blur(5px); }
         .modal-content { background: var(--card-dark); padding: 30px; border-radius: 20px; width: 90%; max-width: 400px; border: 1px solid #333; }
-        .modal-content h2 { margin-bottom: 20px; font-size: 24px; }
-        .modal-content input { width: 100%; padding: 14px; margin: 10px 0; border-radius: 10px; border: 1px solid #333; background: #000; color: white; font-size: 16px; outline: none; }
-        .modal-content input:focus { border-color: var(--pink); }
+        .modal-content h2 { margin-bottom: 20px; font-size: 24px; text-align: center; }
+        .modal-content input { width: 100%; padding: 14px; margin: 10px 0; border-radius: 10px; border: 1px solid #333; background: #000; color: white; font-size: 16px; outline: none; text-align: center; }
 
         .message { text-align: center; color: var(--green); font-weight: 700; margin: 15px 0; display: none; padding: 10px; background: rgba(0, 200, 81, 0.1); border-radius: 8px; }
     </style>
@@ -76,79 +75,79 @@
                 <div class="balance" id="balanceDiv" style="display:none;">
                     <span id="userBalance">0.000$</span>
                 </div>
-                <button class="logout-btn" id="logoutBtn" onclick="logoutUser()" style="display:none;">Logout</button>
+                <button class="logout-btn" id="logoutBtn" onclick="logoutUser()" style="display:none;">خروج</button>
             </div>
         </div>
 
         <div id="homePage" class="main">
-            <h1>Start <span>Earning</span><br>Real Cash Today</h1>
-            <p>Join thousands of users earning $0.003 for every ad watched. Instant rewards!</p>
+            <h1>ابدأ <span>الربح</span><br>اليوم بسهولة</h1>
+            <p>انضم لآلاف المستخدمين واربح $0.003 مقابل كل إعلان تشاهده. سحب فوري!</p>
             <button class="btn btn-primary" onclick="openAuthModal()">
-                <i class="fas fa-rocket"></i> GET STARTED NOW
+                <i class="fas fa-rocket"></i> ابدأ الربح الآن
             </button>
-            <p style="font-size: 12px; margin-top: 15px;">No investment required. 100% Free.</p>
+            <p style="font-size: 12px; margin-top: 15px;">لا يحتاج لاستثمار. مجاني 100%.</p>
         </div>
 
         <div id="dashboard" class="main" style="display:none;">
             <div class="stats-grid">
                 <div class="stat-card">
                     <div class="value" id="totalAds">0</div>
-                    <div class="label">Ads Viewed</div>
+                    <div class="label">إعلانات شاهدتها</div>
                 </div>
                 <div class="stat-card">
                     <div class="value" id="userLevel">1</div>
-                    <div class="label">Current Level</div>
+                    <div class="label">المستوى الحالي</div>
                 </div>
             </div>
 
             <div class="ad-container" id="adPlayer" style="display:none;">
                 <div class="timer-display" id="adTimer">15</div>
-                <div class="ad-status">WATCHING SPONSORED AD...</div>
-                <p style="font-size: 12px; color: #555; margin-top: 20px;">Do not close this page</p>
+                <div class="ad-status">جاري عرض الإعلان المدفوع...</div>
+                <p style="font-size: 12px; color: #555; margin-top: 20px;">يرجى عدم إغلاق الصفحة</p>
             </div>
 
             <button class="btn btn-primary" id="watchAdBtn" onclick="watchVideo()">
-                <i class="fas fa-play-circle"></i> WATCH AD & EARN
+                <i class="fas fa-play-circle"></i> شاهد الإعلان واربح الآن
             </button>
             
             <button class="btn btn-withdraw" id="withdrawBtn" onclick="requestWithdraw()" disabled>
-                <i class="fas fa-wallet"></i> WITHDRAW ($10 MIN)
+                <i class="fas fa-wallet"></i> سحب الأرباح (الحد الأدنى 10$)
             </button>
 
-            <div class="message" id="message">CONGRATS! +$0.003 ADDED ✅</div>
+            <div class="message" id="message">مبروك! +$0.003 تمت الإضافة ✅</div>
 
             <div style="margin-top: 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
-                <button class="btn btn-secondary" onclick="showLeaderboard()">🏆 TOP USERS</button>
-                <button class="btn btn-secondary" onclick="showReferral()">👥 REFERRAL</button>
+                <button class="btn btn-secondary" onclick="showLeaderboard()">🏆 المتصدرين</button>
+                <button class="btn btn-secondary" onclick="showReferral()">👥 نظام الإحالة</button>
             </div>
         </div>
 
         <div id="leaderboardPage" class="main" style="display:none;">
-            <h2>🏆 Top Earners</h2>
+            <h2>🏆 أفضل الرابحين</h2>
             <div id="leaderboardList" style="margin: 20px 0;"></div>
-            <button class="btn btn-secondary" onclick="showDashboard()">BACK TO DASHBOARD</button>
+            <button class="btn btn-secondary" onclick="showDashboard()">الرجوع للوحة التحكم</button>
         </div>
 
         <div id="referralPage" class="main" style="display:none;">
-            <h2>👥 Invite & Earn</h2>
-            <p>Share your code and get 5% of their earnings!</p>
+            <h2>👥 دعوة الأصدقاء</h2>
+            <p>شارك الكود الخاص بك واربح 5% من أرباحهم!</p>
             <div class="stat-card" style="margin: 20px 0;">
                 <div class="value" id="refCode">...</div>
-                <div class="label">Your Unique Code</div>
+                <div class="label">كود الإحالة الخاص بك</div>
             </div>
-            <button class="btn btn-primary" onclick="copyRefCode()">COPY MY CODE</button>
-            <button class="btn btn-secondary" onclick="showDashboard()">BACK</button>
+            <button class="btn btn-primary" onclick="copyRefCode()">نسخ الكود</button>
+            <button class="btn btn-secondary" onclick="showDashboard()">رجوع</button>
         </div>
     </div>
 
     <div class="modal" id="authModal">
         <div class="modal-content">
-            <h2 id="modalTitle">Account Access</h2>
-            <input type="email" id="email" placeholder="Email Address">
-            <input type="password" id="password" placeholder="Password">
-            <button class="btn btn-primary" id="loginBtn" onclick="loginUser()">LOGIN</button>
-            <button class="btn btn-secondary" id="signupBtn" onclick="signupUser()">CREATE ACCOUNT</button>
-            <button class="btn btn-secondary" onclick="closeAuthModal()" style="opacity: 0.5;">CANCEL</button>
+            <h2 id="modalTitle">تسجيل الدخول</h2>
+            <input type="email" id="email" placeholder="البريد الإلكتروني">
+            <input type="password" id="password" placeholder="كلمة السر">
+            <button class="btn btn-primary" id="loginBtn" onclick="loginUser()">دخول</button>
+            <button class="btn btn-secondary" id="signupBtn" onclick="signupUser()">إنشاء حساب جديد</button>
+            <button class="btn btn-secondary" onclick="closeAuthModal()" style="opacity: 0.5;">إلغاء</button>
         </div>
     </div>
 
@@ -169,12 +168,13 @@
         firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
         const db = firebase.firestore();
+        
+        // حط الرابط الجديد من AdsTerra هنا
         const AD_LINK = "https://www.profitablecpmratenework.com/wyqf720j2p?key=e32d605e8d90f2fdb51e61e579728396";
 
         let currentUser = null;
         let userData = null;
 
-        // AUTH LISTENER
         auth.onAuthStateChanged(async (user) => {
             if (user) {
                 currentUser = user;
@@ -195,7 +195,7 @@
                     await db.collection('users').doc(uid).set(userData);
                 }
                 updateDashboardUI();
-            } catch (e) { console.error("Data error", e); }
+            } catch (e) { console.error("Error", e); }
         }
 
         function updateDashboardUI() {
@@ -223,25 +223,24 @@
             const e = document.getElementById('email').value;
             const p = document.getElementById('password').value;
             const btn = document.getElementById('loginBtn');
-            if(!e || !p) return alert("Please fill all fields");
-            btn.innerText = "CONNECTING..."; btn.disabled = true;
+            if(!e || !p) return alert("المرجو إدخال جميع البيانات");
+            btn.innerText = "جاري الاتصال..."; btn.disabled = true;
             try { await auth.signInWithEmailAndPassword(e, p); } 
-            catch(err) { alert(err.message); btn.innerText = "LOGIN"; btn.disabled = false; }
+            catch(err) { alert("خطأ: " + err.message); btn.innerText = "دخول"; btn.disabled = false; }
         }
 
         async function signupUser() {
             const e = document.getElementById('email').value;
             const p = document.getElementById('password').value;
             const btn = document.getElementById('signupBtn');
-            if(!e || !p) return alert("Please fill all fields");
-            btn.innerText = "CREATING..."; btn.disabled = true;
+            if(!e || !p) return alert("المرجو إدخال جميع البيانات");
+            btn.innerText = "جاري الإنشاء..."; btn.disabled = true;
             try { await auth.createUserWithEmailAndPassword(e, p); } 
-            catch(err) { alert(err.message); btn.innerText = "CREATE ACCOUNT"; btn.disabled = false; }
+            catch(err) { alert("خطأ: " + err.message); btn.innerText = "إنشاء حساب جديد"; btn.disabled = false; }
         }
 
         function logoutUser() { auth.signOut(); }
 
-        // AD SYSTEM
         function watchVideo() {
             window.open(AD_LINK, '_blank');
             const btn = document.getElementById('watchAdBtn');
@@ -257,8 +256,8 @@
 
         async function finishAd() {
             document.getElementById('adPlayer').style.display = 'none';
-            const newBal = userData.balance + 0.003;
-            const newTotal = userData.totalAds + 1;
+            const newBal = (userData.balance || 0) + 0.003;
+            const newTotal = (userData.totalAds || 0) + 1;
             const newLevel = Math.floor(newTotal / 100) + 1;
             
             await db.collection('users').doc(currentUser.uid).update({ 
@@ -277,7 +276,6 @@
             document.getElementById('watchAdBtn').disabled = false;
         }
 
-        // NAVIGATION
         function showDashboard() { 
             document.getElementById('dashboard').style.display='block'; 
             document.getElementById('leaderboardPage').style.display='none'; 
@@ -287,17 +285,17 @@
             document.getElementById('dashboard').style.display='none';
             document.getElementById('leaderboardPage').style.display='block';
             const list = document.getElementById('leaderboardList');
-            list.innerHTML = 'Loading...';
+            list.innerHTML = 'جاري التحميل...';
             const snap = await db.collection('users').orderBy('balance', 'desc').limit(5).get();
             list.innerHTML = '';
             snap.forEach(doc => {
                 const d = doc.data();
-                list.innerHTML += `<div class="leader-item"><span>${d.email.split('@')[0]}</span><strong>${d.balance.toFixed(3)}$</strong></div>`;
+                list.innerHTML += `<div class="leader-item"><span>${d.email ? d.email.split('@')[0] : 'مستخدم'}</span><strong>${(d.balance || 0).toFixed(3)}$</strong></div>`;
             });
         }
         function showReferral() { document.getElementById('dashboard').style.display='none'; document.getElementById('referralPage').style.display='block'; }
-        function copyRefCode() { navigator.clipboard.writeText(userData.refCode); alert("Code Copied!"); }
-        function requestWithdraw() { alert("Request sent! Minimum $10 required."); }
+        function copyRefCode() { navigator.clipboard.writeText(userData.refCode); alert("تم نسخ الكود بنجاح!"); }
+        function requestWithdraw() { alert("تم إرسال الطلب! الحد الأدنى للسحب هو 10$."); }
     </script>
 </body>
 </html>
