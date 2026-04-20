@@ -3,38 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CashReel - Watch & Earn</title>
+    <title>CashReel - Earn Money</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        :root {
-            --bg-dark: #0F0F0F;
-            --card-dark: #1E1E1E;
-            --text-white: #FFFFFF;
-            --text-gray: #94a3b8;
-            --pink: #FF0050;
-            --cyan: #00F2EA;
-            --green: #00C851;
-            --yellow: #FFD700;
-        }
+        :root { --bg: #0F0F0F; --card: #1E1E1E; --pink: #FF0050; --cyan: #00F2EA; --white: #FFFFFF; }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Cairo', sans-serif; background: var(--bg-dark); color: var(--text-white); min-height: 100vh; }
-        .container { max-width: 500px; margin: 0 auto; padding: 20px; }
-        .header { display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-bottom: 1px solid #333; margin-bottom: 20px; }
+        body { font-family: 'Cairo', sans-serif; background: var(--bg); color: var(--white); text-align: center; }
+        .container { max-width: 450px; margin: 0 auto; padding: 20px; }
+        .header { display: flex; justify-content: space-between; align-items: center; padding: 20px 0; border-bottom: 1px solid #333; }
         .logo { font-size: 24px; font-weight: 900; color: var(--pink); }
-        .balance { display: flex; align-items: center; gap: 8px; background: var(--card-dark); padding: 8px 15px; border-radius: 20px; border: 1px solid var(--cyan); }
-        #userBalance { font-size: 18px; font-weight: 700; color: var(--cyan); }
-        .logout-btn { background: #333; color: var(--text-white); border: none; padding: 8px 15px; border-radius: 8px; cursor: pointer; }
-        .main { text-align: center; padding: 20px 0; }
-        .btn { width: 100%; padding: 15px; border: none; border-radius: 12px; font-size: 16px; font-weight: 700; cursor: pointer; margin: 8px 0; transition: all 0.3s; }
-        .btn-primary { background: var(--pink); color: white; }
-        .btn-secondary { background: var(--card-dark); color: var(--text-white); }
-        .ad-player { background: #000; border-radius: 15px; height: 350px; display: flex; align-items: center; justify-content: center; margin: 20px 0; position: relative; overflow: hidden; border: 2px solid #333; }
-        .timer { position: absolute; top: 15px; right: 15px; background: rgba(0,0,0,0.8); padding: 5px 15px; border-radius: 20px; color: var(--yellow); font-weight: bold; }
+        .balance-box { background: var(--card); padding: 10px 20px; border-radius: 20px; border: 1px solid var(--cyan); display: none; }
+        .btn { width: 100%; padding: 15px; border: none; border-radius: 12px; font-size: 16px; font-weight: 700; cursor: pointer; margin: 10px 0; }
+        .btn-pink { background: var(--pink); color: white; }
+        .btn-gray { background: var(--card); color: white; border: 1px solid #444; }
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); justify-content: center; align-items: center; z-index: 1000; }
-        .modal-content { background: var(--card-dark); padding: 30px; border-radius: 15px; width: 90%; max-width: 400px; }
-        .modal-content input { width: 100%; padding: 12px; margin: 8px 0; border-radius: 8px; border: 1px solid #333; background: var(--bg-dark); color: white; }
-        .message { text-align: center; color: var(--green); font-weight: 700; margin: 10px 0; display: none; }
+        .modal-content { background: var(--card); padding: 30px; border-radius: 20px; width: 90%; }
+        input { width: 100%; padding: 12px; margin: 10px 0; border-radius: 8px; border: 1px solid #444; background: #000; color: white; }
+        #adSection { display: none; margin-top: 30px; }
+        .timer-circle { font-size: 40px; color: var(--cyan); margin: 20px 0; }
     </style>
     <script src="https://pl29085009.profitablecpmratenework.com/f1/b5/64/f1b564b85d4f11bc10413d8c7c15e0c7.js"></script>
 </head>
@@ -42,38 +28,35 @@
     <div class="container">
         <div class="header">
             <div class="logo">CashReel</div>
-            <div id="authSection" style="display: flex; gap: 10px; align-items: center;">
-                <div class="balance" id="balanceDiv" style="display:none;">
-                    <span id="userBalance">0.000$</span>
-                </div>
-                <button class="logout-btn" id="logoutBtn" onclick="logoutUser()" style="display:none;">Logout</button>
+            <div class="balance-box" id="balanceBox">
+                <span id="userBalance">0.000</span>$
             </div>
         </div>
 
-        <div id="homePage" class="main">
-            <h1>Earn <span>Cash</span> by<br>Watching Videos</h1>
-            <p>Get paid for every ad you watch!</p>
-            <button class="btn btn-primary" onclick="openAuthModal()">Login / Join Now</button>
+        <div id="welcomeView">
+            <h1 style="margin-top:50px;">Watch & <span style="color:var(--pink)">Earn Cash</span></h1>
+            <p style="color:#888; margin: 20px 0;">Get $0.003 for every video ad</p>
+            <button class="btn btn-pink" onclick="openAuth()">Start Earning Now</button>
         </div>
 
-        <div id="dashboard" class="main" style="display:none;">
-            <div class="ad-player" id="adPlayer" style="display:none;">
-                <div class="timer" id="adTimer">15</div>
-                <p>Wait for the ad to finish...</p>
+        <div id="dashboardView" style="display:none;">
+            <div id="adSection">
+                <div class="timer-circle" id="timerDisplay">15</div>
+                <p>Watching ad... Please wait</p>
             </div>
-            <button class="btn btn-primary" id="watchAdBtn" onclick="watchVideo()">Watch Ad & Earn $0.003</button>
-            <div class="message" id="message">Success! Rewards Added ✅</div>
+            <button class="btn btn-pink" id="watchBtn" onclick="startAd()">Watch Ad & Earn</button>
+            <button class="btn btn-gray" onclick="logout()">Logout</button>
         </div>
     </div>
 
     <div class="modal" id="authModal">
         <div class="modal-content">
-            <h2 id="modalTitle">Welcome</h2>
-            <input type="email" id="email" placeholder="Enter your Email">
-            <input type="password" id="password" placeholder="Enter Password">
-            <button class="btn btn-primary" id="loginBtn" onclick="loginUser()">Login</button>
-            <button class="btn btn-secondary" id="signupBtn" onclick="signupUser()">Create New Account</button>
-            <button class="btn btn-secondary" onclick="closeAuthModal()" style="opacity: 0.6;">Cancel</button>
+            <h2 id="authTitle">Login</h2>
+            <input type="email" id="email" placeholder="Email">
+            <input type="password" id="password" placeholder="Password">
+            <button class="btn btn-pink" id="submitBtn" onclick="handleAuth()">Login</button>
+            <p id="toggleText" style="cursor:pointer; color:#888; font-size:14px;" onclick="toggleAuthMode()">New here? Create account</p>
+            <button class="btn btn-gray" onclick="closeAuth()">Cancel</button>
         </div>
     </div>
 
@@ -83,110 +66,109 @@
 
     <script>
         const firebaseConfig = {
-          apiKey: "AIzaSyC8tq5Ry9yVhcKbumQlbU4NE4JLHd-RRgE",
-          authDomain: "cashreel-f8198.firebaseapp.com",
-          projectId: "cashreel-f8198",
-          storageBucket: "cashreel-f8198.firebasestorage.app",
-          messagingSenderId: "969237019203",
-          appId: "1:969237019203:web:6e1c4124969d4f6f7c32f6"
+            apiKey: "AIzaSyC8tq5Ry9yVhcKbumQlbU4NE4JLHd-RRgE",
+            authDomain: "cashreel-f8198.firebaseapp.com",
+            projectId: "cashreel-f8198",
+            storageBucket: "cashreel-f8198.firebasestorage.app",
+            messagingSenderId: "969237019203",
+            appId: "1:969237019203:web:6e1c4124969d4f6f7c32f6"
         };
 
         firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
         const db = firebase.firestore();
-        const SMARTLINK = "https://www.profitablecpmratenework.com/wyqf720j2p?key=e32d605e8d90f2fdb51e61e579728396";
+        const AD_LINK = "https://www.profitablecpmratenework.com/wyqf720j2p?key=e32d605e8d90f2fdb51e61e579728396";
 
-        let currentUser = null;
-        let userData = null;
+        let isLoginMode = true;
+        let userData = { balance: 0 };
 
+        // Check user status
         auth.onAuthStateChanged(async (user) => {
             if (user) {
-                currentUser = user;
-                await loadUserData(user.uid);
-                toggleUI(true);
+                await fetchUserData(user.uid);
+                showView('dashboard');
             } else {
-                toggleUI(false);
+                showView('welcome');
             }
         });
 
-        async function loadUserData(uid) {
+        async function fetchUserData(uid) {
             const doc = await db.collection('users').doc(uid).get();
             if (doc.exists) {
                 userData = doc.data();
             } else {
-                userData = { balance: 0, email: currentUser.email };
+                userData = { balance: 0, email: auth.currentUser.email };
                 await db.collection('users').doc(uid).set(userData);
             }
-            document.getElementById('userBalance').innerText = userData.balance.toFixed(3) + '$';
+            document.getElementById('userBalance').innerText = userData.balance.toFixed(3);
         }
 
-        function toggleUI(isLoggedIn) {
-            document.getElementById('homePage').style.display = isLoggedIn ? 'none' : 'block';
-            document.getElementById('dashboard').style.display = isLoggedIn ? 'block' : 'none';
-            document.getElementById('balanceDiv').style.display = isLoggedIn ? 'flex' : 'none';
-            document.getElementById('logoutBtn').style.display = isLoggedIn ? 'block' : 'none';
-            document.getElementById('authModal').style.display = 'none';
+        // Auth Functions
+        function toggleAuthMode() {
+            isLoginMode = !isLoginMode;
+            document.getElementById('authTitle').innerText = isLoginMode ? 'Login' : 'Sign Up';
+            document.getElementById('submitBtn').innerText = isLoginMode ? 'Login' : 'Register';
+            document.getElementById('toggleText').innerText = isLoginMode ? 'New here? Create account' : 'Have account? Login';
         }
 
-        function openAuthModal() { document.getElementById('authModal').style.display = 'flex'; }
-        function closeAuthModal() { document.getElementById('authModal').style.display = 'none'; }
-
-        async function loginUser() {
+        async function handleAuth() {
             const e = document.getElementById('email').value;
             const p = document.getElementById('password').value;
-            const btn = document.getElementById('loginBtn');
-            if(!e || !p) return alert("Fill all fields");
+            const btn = document.getElementById('submitBtn');
+            if(!e || !p) return alert("Fill data");
+
             btn.innerText = "Connecting..."; btn.disabled = true;
+
             try {
-                await auth.signInWithEmailAndPassword(e, p);
-            } catch(err) {
-                alert("Error: " + err.message);
-                btn.innerText = "Login"; btn.disabled = false;
+                if(isLoginMode) {
+                    await auth.signInWithEmailAndPassword(e, p);
+                } else {
+                    await auth.createUserWithEmailAndPassword(e, p);
+                }
+                closeAuth();
+            } catch (err) {
+                alert("Firebase Error: " + err.message);
+                btn.innerText = isLoginMode ? "Login" : "Register";
+                btn.disabled = false;
             }
         }
 
-        async function signupUser() {
-            const e = document.getElementById('email').value;
-            const p = document.getElementById('password').value;
-            const btn = document.getElementById('signupBtn');
-            if(!e || !p) return alert("Fill all fields");
-            btn.innerText = "Creating..."; btn.disabled = true;
-            try {
-                await auth.createUserWithEmailAndPassword(e, p);
-            } catch(err) {
-                alert("Error: " + err.message);
-                btn.innerText = "Create New Account"; btn.disabled = false;
-            }
-        }
-
-        function logoutUser() { auth.signOut(); }
-
-        function watchVideo() {
-            window.open(SMARTLINK, '_blank');
-            const btn = document.getElementById('watchAdBtn');
-            btn.disabled = true;
-            document.getElementById('adPlayer').style.display = 'flex';
+        // Ads & Rewards
+        function startAd() {
+            window.open(AD_LINK, '_blank');
+            document.getElementById('watchBtn').style.display = 'none';
+            document.getElementById('adSection').style.display = 'block';
             let s = 15;
             const timer = setInterval(() => {
                 s--;
-                document.getElementById('adTimer').innerText = s;
+                document.getElementById('timerDisplay').innerText = s;
                 if(s <= 0) {
                     clearInterval(timer);
-                    finishAd();
+                    rewardUser();
                 }
             }, 1000);
         }
 
-        async function finishAd() {
-            document.getElementById('adPlayer').style.display = 'none';
+        async function rewardUser() {
             const newBalance = userData.balance + 0.003;
-            await db.collection('users').doc(currentUser.uid).update({ balance: newBalance });
+            await db.collection('users').doc(auth.currentUser.uid).update({ balance: newBalance });
             userData.balance = newBalance;
-            document.getElementById('userBalance').innerText = newBalance.toFixed(3) + '$';
-            document.getElementById('message').style.display = 'block';
-            setTimeout(() => document.getElementById('message').style.display = 'none', 3000);
-            document.getElementById('watchAdBtn').disabled = false;
+            document.getElementById('userBalance').innerText = newBalance.toFixed(3);
+            alert("Reward added! +$0.003");
+            document.getElementById('watchBtn').style.display = 'block';
+            document.getElementById('adSection').style.display = 'none';
+            document.getElementById('timerDisplay').innerText = "15";
         }
+
+        // UI Helpers
+        function showView(view) {
+            document.getElementById('welcomeView').style.display = view === 'welcome' ? 'block' : 'none';
+            document.getElementById('dashboardView').style.display = view === 'dashboard' ? 'block' : 'none';
+            document.getElementById('balanceBox').style.display = view === 'dashboard' ? 'block' : 'none';
+        }
+        function openAuth() { document.getElementById('authModal').style.display = 'flex'; }
+        function closeAuth() { document.getElementById('authModal').style.display = 'none'; }
+        function logout() { auth.signOut(); }
     </script>
 </body>
 </html>
