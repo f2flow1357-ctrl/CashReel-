@@ -3,26 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CashReel - شاهد واربح</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        :root {
-            --bg: #0F0F0F;
-            --card: #1E1E1E;
-            --pink: #FF0050;
-            --cyan: #00F2EA;
-            --white: #FFFFFF;
-            --gray: #94a3b8;
-        }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Cairo', sans-serif; background: var(--bg); color: var(--white); min-height: 100vh; overflow-x: hidden; }
-        .container { max-width: 500px; margin: 0 auto; padding: 20px; }
-        <!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CashReel - شاهد واربح مبالغ حقيقية</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -289,62 +269,3 @@
     </script>
 </body>
 </html>
-
-        .header { display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-bottom: 1px solid #333; margin-bottom: 20px; }
-        .logo { font-size: 26px; font-weight: 900; color: var(--pink); letter-spacing: 1px; }
-        .balance { display: flex; align-items: center; gap: 8px; background: var(--card); padding: 8px 15px; border-radius: 20px; border: 1px solid var(--cyan); }
-        #userBalance { font-size: 18px; font-weight: 700; color: var(--cyan); }
-        .logout-btn { background: #333; color: var(--white); border: none; padding: 8px 15px; border-radius: 8px; cursor: pointer; }
-
-        .main { text-align: center; padding: 20px 0; }
-        .btn { width: 100%; padding: 16px; border: none; border-radius: 12px; font-size: 16px; font-weight: 700; cursor: pointer; margin: 8px 0; transition: 0.3s; display: flex; align-items: center; justify-content: center; gap: 10px; }
-        .btn-primary { background: var(--pink); color: white; }
-        .btn-secondary { background: var(--card); color: white; border: 1px solid #333; }
-
-        .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 20px 0; }
-        .stat-card { background: var(--card); padding: 15px; border-radius: 15px; border: 1px solid #222; }
-        .stat-card .value { font-size: 22px; font-weight: 800; color: var(--cyan); }
-
-        .ad-container { background: #000; border-radius: 20px; height: 300px; display: flex; flex-direction: column; align-items: center; justify-content: center; margin: 20px 0; border: 2px dashed #333; }
-        .timer-display { font-size: 50px; font-weight: 900; color: #FFD700; }
-
-        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); justify-content: center; align-items: center; z-index: 2000; }
-        .modal-content { background: var(--card); padding: 30px; border-radius: 20px; width: 90%; max-width: 400px; }
-        input { width: 100%; padding: 14px; margin: 10px 0; border-radius: 10px; border: 1px solid #333; background: #000; color: white; text-align: center; }
-        .message { color: #00C851; font-weight: 700; margin: 15px 0; display: none; }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <div class="header">
-            <div class="logo">CashReel</div>
-            <div id="authHeader" style="display:none; display: flex; gap: 10px; align-items: center;">
-                <div class="balance"><span id="userBalance">0.000$</span></div>
-                <button class="logout-btn" onclick="logoutUser()">خروج</button>
-            </div>
-        </div>
-
-        <div id="homePage" class="main">
-            <h1>اربح <span>المال</span><br>بمشاهدة الفيديوهات</h1>
-            <p>اربح $0.003 على كل إعلان تشاهده</p>
-            <button class="btn btn-primary" onclick="openModal()">ابدأ الربح الآن</button>
-        </div>
-
-        <div id="dashboard" class="main" style="display:none;">
-            <div class="stats-grid">
-                <div class="stat-card"><div class="value" id="totalAds">0</div><div style="font-size:12px;">الإعلانات</div></div>
-                <div class="stat-card"><div class="value" id="userLevel">1</div><div style="font-size:12px;">المستوى</div></div>
-            </div>
-            <div class="ad-container" id="adPlayer" style="display:none;">
-                <div class="timer-display" id="adTimer">15</div>
-                <p>انتظر حتى ينتهي الإعلان...</p>
-            </div>
-            <button class="btn btn-primary" id="watchBtn" onclick="watchAd()">شاهد الإعلان واربح</button>
-            <div class="message" id="rewardMsg">تمت إضافة الربح بنجاح! ✅</div>
-            <button class="btn btn-secondary" onclick="showLeaderboard()">🏆 قائمة المتصدرين</button>
-        </div>
-
-        <div id="leaderboard" class="main" style="display:none;">
-            <h2>🏆 المتصدرين</h2>
-            <div id="leaderList" style="margin:20px 0;"></div>
-            <button class="btn btn-secondary"
