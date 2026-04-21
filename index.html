@@ -21,14 +21,14 @@
         body { font-family: 'Cairo', sans-serif; background: var(--bg-dark); color: var(--text-white); min-height: 100vh; overflow-x: hidden; }
         .container { max-width: 500px; margin: 0 auto; padding: 20px; }
         
-        /* الهيدر والمحفظة */
+        /* Header */
         .header { display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-bottom: 1px solid #333; margin-bottom: 20px; }
         .logo { font-size: 26px; font-weight: 900; color: var(--pink); text-transform: uppercase; letter-spacing: 1px; }
         .balance { display: flex; align-items: center; gap: 8px; background: var(--card-dark); padding: 8px 15px; border-radius: 20px; border: 1px solid var(--cyan); }
         #userBalance { font-size: 18px; font-weight: 700; color: var(--cyan); }
         .logout-btn { background: #333; color: var(--text-white); border: none; padding: 8px 15px; border-radius: 8px; cursor: pointer; font-weight: 600; }
 
-        /* واجهة المستخدم الرئيسية */
+        /* Main UI */
         .main { text-align: center; padding: 20px 0; animation: fadeIn 0.5s ease; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         
@@ -38,26 +38,25 @@
 
         .btn { width: 100%; padding: 16px; border: none; border-radius: 12px; font-size: 16px; font-weight: 700; cursor: pointer; margin: 8px 0; transition: all 0.3s; display: flex; align-items: center; justify-content: center; gap: 10px; }
         .btn-primary { background: var(--pink); color: white; box-shadow: 0 4px 15px rgba(255, 0, 80, 0.3); }
-        .btn-primary:active { transform: scale(0.98); }
         .btn-secondary { background: var(--card-dark); color: var(--text-white); border: 1px solid #333; }
         .btn-withdraw { background: #555; color: #999; cursor: not-allowed; }
         .btn-withdraw.active { background: var(--green); color: white; cursor: pointer; box-shadow: 0 4px 15px rgba(0, 200, 81, 0.3); }
 
-        /* شبكة الإحصائيات */
+        /* Stats Grid */
         .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 20px 0; }
         .stat-card { background: var(--card-dark); padding: 15px; border-radius: 15px; border: 1px solid #222; }
         .stat-card .value { font-size: 22px; font-weight: 800; color: var(--cyan); }
-        .stat-card .label { font-size: 12px; color: var(--text-gray); text-transform: uppercase; margin-top: 5px; }
+        .stat-card .label { font-size: 12px; color: var(--text-gray); margin-top: 5px; }
 
-        /* منطقة مشغل الإعلانات */
-        .ad-container { background: #000; border-radius: 20px; height: 300px; display: flex; flex-direction: column; align-items: center; justify-content: center; margin: 20px 0; position: relative; overflow: hidden; border: 2px dashed #333; }
-        .timer-display { font-size: 50px; font-weight: 900; color: var(--yellow); text-shadow: 0 0 20px rgba(255, 215, 0, 0.5); }
+        /* Ad Player */
+        .ad-container { background: #000; border-radius: 20px; height: 250px; display: flex; flex-direction: column; align-items: center; justify-content: center; margin: 20px 0; position: relative; overflow: hidden; border: 2px dashed #333; }
+        .timer-display { font-size: 50px; font-weight: 900; color: var(--yellow); }
         .ad-status { color: var(--text-gray); margin-top: 10px; font-weight: 600; }
 
-        /* لوحة الصدارة */
+        /* List Items */
         .leader-item { display: flex; justify-content: space-between; align-items: center; padding: 12px 20px; background: var(--card-dark); margin: 8px 0; border-radius: 10px; border-left: 4px solid var(--pink); }
 
-        /* النوافذ المنبثقة */
+        /* Modal */
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); justify-content: center; align-items: center; z-index: 2000; backdrop-filter: blur(5px); }
         .modal-content { background: var(--card-dark); padding: 30px; border-radius: 20px; width: 90%; max-width: 400px; border: 1px solid #333; }
         .modal-content h2 { margin-bottom: 20px; font-size: 24px; text-align: center; }
@@ -84,6 +83,7 @@
             <button class="btn btn-primary" onclick="openAuthModal()">
                 <i class="fas fa-rocket"></i> ابدأ الربح الآن
             </button>
+            <p style="font-size: 12px; margin-top: 15px;">لا يحتاج لاستثمار. مجاني 100%.</p>
         </div>
 
         <div id="dashboard" class="main" style="display:none;">
@@ -115,25 +115,25 @@
 
             <div style="margin-top: 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
                 <button class="btn btn-secondary" onclick="showLeaderboard()">🏆 المتصدرين</button>
-                <button class="btn btn-secondary" onclick="showReferral()">👥 الإحالة</button>
+                <button class="btn btn-secondary" onclick="showReferral()">👥 نظام الإحالة</button>
             </div>
         </div>
 
         <div id="leaderboardPage" class="main" style="display:none;">
             <h2>🏆 أفضل الرابحين</h2>
             <div id="leaderboardList" style="margin: 20px 0;"></div>
-            <button class="btn btn-secondary" onclick="showDashboard()">الرجوع</button>
+            <button class="btn btn-secondary" onclick="showDashboard()">الرجوع للوحة التحكم</button>
         </div>
 
         <div id="referralPage" class="main" style="display:none;">
-            <h2>👥 نظام الإحالة</h2>
-            <p>شارك كود الإحالة واربح عمولة!</p>
+            <h2>👥 دعوة الأصدقاء</h2>
+            <p>شارك الكود الخاص بك واربح 5% من أرباحهم!</p>
             <div class="stat-card" style="margin: 20px 0;">
                 <div class="value" id="refCodeDisplay">...</div>
-                <div class="label">كودك الخاص</div>
+                <div class="label">كود الإحالة الخاص بك</div>
             </div>
             <button class="btn btn-primary" onclick="copyRef()">نسخ الكود</button>
-            <button class="btn btn-secondary" onclick="showDashboard()">الرجوع</button>
+            <button class="btn btn-secondary" onclick="showDashboard()">رجوع</button>
         </div>
     </div>
 
@@ -143,7 +143,7 @@
             <input type="email" id="email" placeholder="البريد الإلكتروني">
             <input type="password" id="password" placeholder="كلمة السر">
             <button class="btn btn-primary" id="loginBtn" onclick="loginUser()">دخول</button>
-            <button class="btn btn-secondary" id="signupBtn" onclick="signupUser()">حساب جديد</button>
+            <button class="btn btn-secondary" id="signupBtn" onclick="signupUser()">إنشاء حساب جديد</button>
             <button class="btn btn-secondary" onclick="closeAuthModal()" style="opacity: 0.5;">إلغاء</button>
         </div>
     </div>
@@ -153,6 +153,7 @@
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
 
     <script>
+        // Firebase Configuration
         const firebaseConfig = {
           apiKey: "AIzaSyC8tq5Ry9yVhcKbumQlbU4NE4JLHd-RRgE",
           authDomain: "cashreel-f8198.firebaseapp.com",
@@ -161,11 +162,12 @@
           messagingSenderId: "969237019203",
           appId: "1:969237019203:web:6e1c4124969d4f6f7c32f6"
         };
+
         firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
         const db = firebase.firestore();
         
-        // ⚠️ هام: حط الرابط الجديد من Adsterra هنا
+        // ⚠️ هام: حط الرابط الجديد من AdsTerra هنا
         const AD_LINK = "https://www.profitablecpmratenework.com/wyqf720j2p?key=e32d605e8d90f2fdb51e61e579728396";
 
         let currentUser = null;
@@ -182,22 +184,34 @@
         });
 
         async function loadUserData(uid) {
-            const doc = await db.collection('users').doc(uid).get();
-            if (doc.exists) {
-                userData = doc.data();
-            } else {
-                userData = { balance: 0, totalAds: 0, level: 1, email: currentUser.email, refCode: uid.substring(0,6).toUpperCase() };
-                await db.collection('users').doc(uid).set(userData);
-            }
-            updateDashboardUI();
+            try {
+                const doc = await db.collection('users').doc(uid).get();
+                if (doc.exists) {
+                    userData = doc.data();
+                } else {
+                    userData = { 
+                        balance: 0, 
+                        totalAds: 0, 
+                        level: 1, 
+                        email: currentUser.email, 
+                        refCode: uid.substring(0,6).toUpperCase() 
+                    };
+                    await db.collection('users').doc(uid).set(userData);
+                }
+                updateDashboardUI();
+            } catch (e) { console.error("Error", e); }
         }
 
         function updateDashboardUI() {
-            document.getElementById('userBalance').innerText = userData.balance.toFixed(3) + '$';
-            document.getElementById('totalAds').innerText = userData.totalAds;
-            document.getElementById('userLevel').innerText = userData.level;
-            document.getElementById('refCodeDisplay').innerText = userData.refCode;
-            if(userData.balance >= 10) document.getElementById('withdrawBtn').classList.add('active');
+            document.getElementById('userBalance').innerText = (userData.balance || 0).toFixed(3) + '$';
+            document.getElementById('totalAds').innerText = userData.totalAds || 0;
+            document.getElementById('userLevel').innerText = userData.level || 1;
+            document.getElementById('refCodeDisplay').innerText = userData.refCode || "N/A";
+            
+            if(userData.balance >= 10) {
+                document.getElementById('withdrawBtn').disabled = false;
+                document.getElementById('withdrawBtn').classList.add('active');
+            }
         }
 
         function toggleUI(loggedIn) {
@@ -213,34 +227,50 @@
 
         async function loginUser() {
             const e = document.getElementById('email').value, p = document.getElementById('password').value;
-            try { await auth.signInWithEmailAndPassword(e, p); } catch(err) { alert(err.message); }
+            if(!e || !p) return alert("المرجو إدخال البيانات");
+            try { await auth.signInWithEmailAndPassword(e, p); } catch(err) { alert("خطأ: " + err.message); }
         }
 
         async function signupUser() {
             const e = document.getElementById('email').value, p = document.getElementById('password').value;
-            try { await auth.createUserWithEmailAndPassword(e, p); } catch(err) { alert(err.message); }
+            if(!e || !p) return alert("المرجو إدخال البيانات");
+            try { await auth.createUserWithEmailAndPassword(e, p); } catch(err) { alert("خطأ: " + err.message); }
         }
 
         function logoutUser() { auth.signOut(); }
 
         function watchVideo() {
             window.open(AD_LINK, '_blank');
-            document.getElementById('watchAdBtn').disabled = true;
+            const btn = document.getElementById('watchAdBtn');
+            btn.disabled = true;
             document.getElementById('adPlayer').style.display = 'flex';
             let s = 15;
             const timer = setInterval(() => {
                 s--;
                 document.getElementById('adTimer').innerText = s;
-                if(s <= 0) { clearInterval(timer); finishAd(); }
+                if(s <= 0) { 
+                    clearInterval(timer); 
+                    finishAd(); 
+                }
             }, 1000);
         }
 
         async function finishAd() {
-            const newBal = userData.balance + 0.003;
-            const newTotal = userData.totalAds + 1;
-            await db.collection('users').doc(currentUser.uid).update({ balance: newBal, totalAds: newTotal });
-            userData.balance = newBal; userData.totalAds = newTotal;
+            const newBal = (userData.balance || 0) + 0.003;
+            const newTotal = (userData.totalAds || 0) + 1;
+            const newLevel = Math.floor(newTotal / 100) + 1;
+            
+            await db.collection('users').doc(currentUser.uid).update({ 
+                balance: newBal, 
+                totalAds: newTotal,
+                level: newLevel
+            });
+            
+            userData.balance = newBal;
+            userData.totalAds = newTotal;
+            userData.level = newLevel;
             updateDashboardUI();
+            
             document.getElementById('adPlayer').style.display = 'none';
             document.getElementById('watchAdBtn').disabled = false;
             document.getElementById('message').style.display = 'block';
@@ -252,20 +282,22 @@
             document.getElementById('leaderboardPage').style.display='none'; 
             document.getElementById('referralPage').style.display='none'; 
         }
+
         async function showLeaderboard() {
             document.getElementById('dashboard').style.display='none';
             document.getElementById('leaderboardPage').style.display='block';
             const list = document.getElementById('leaderboardList');
+            list.innerHTML = 'جاري التحميل...';
             const snap = await db.collection('users').orderBy('balance', 'desc').limit(5).get();
             list.innerHTML = '';
             snap.forEach(doc => {
                 const d = doc.data();
-                list.innerHTML += `<div class="leader-item"><span>${d.email.split('@')[0]}</span><strong>${d.balance.toFixed(3)}$</strong></div>`;
+                list.innerHTML += `<div class="leader-item"><span>${d.email.split('@')[0]}</span><strong>${(d.balance || 0).toFixed(3)}$</strong></div>`;
             });
         }
         function showReferral() { document.getElementById('dashboard').style.display='none'; document.getElementById('referralPage').style.display='block'; }
         function copyRef() { navigator.clipboard.writeText(userData.refCode); alert("تم نسخ الكود!"); }
-        function requestWithdraw() { alert("الحد الأدنى 10$"); }
+        function requestWithdraw() { alert("الحد الأدنى للسحب هو 10$. واصل العمل!"); }
     </script>
 </body>
 </html>
